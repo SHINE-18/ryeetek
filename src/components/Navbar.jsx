@@ -5,7 +5,7 @@ import { Menu, X, Phone } from "lucide-react";
 const LINKS = [
   { to: "/capabilities", label: "Capabilities" },
   { to: "/wearguard", label: "WearGuard" },
-  { to: "/engineering", label: "Engineering & R&D" },
+  { to: "/engineering", label: "Engineering" },
   { to: "/contact", label: "Contact" },
 ];
 

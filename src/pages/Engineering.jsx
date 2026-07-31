@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Search, Users, FileCheck2, ClipboardList, CheckCircle2 } from "lucide-react";
 import PhotoPlaceholder from "../components/PhotoPlaceholder";
 import SectionHeading from "../components/SectionHeading";
+import SEO from "../components/SEO";
 
 const OFFER = [
   "Concept engineering, feasibility review and duty definition",
@@ -29,6 +30,11 @@ const STAGES = [
 export default function Engineering() {
   return (
     <div>
+      <SEO
+        title="Custom Industrial Equipment Engineering & R&D Australia | Ryetek"
+        description="Concept engineering, 3D design, product development, vendor coordination, FAT and documentation for buildable industrial equipment and plant systems."
+        path="/engineering"
+      />
       <section className="relative overflow-hidden bg-navy-950 pt-32 pb-20 lg:pt-40 lg:pb-24">
         <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[42%] lg:block">
           <PhotoPlaceholder motif="desk" image="/images/engineering-rd.png" className="h-full w-full" label="Engineering team" />
@@ -124,6 +130,33 @@ export default function Engineering() {
                 <p className="mt-2 text-xs leading-relaxed text-navy-700/80">{s.body}</p>
               </motion.div>
             ))}
+          </div>
+
+          {/* FAQ Section */}
+          <div className="mt-12 border-t border-line-200 pt-8">
+            <h3 className="mb-6 font-display text-xl font-bold uppercase text-navy-950">
+              Engineering & R&D FAQs
+            </h3>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <details className="group border border-line-200 bg-white p-5 transition-all [&[open]]:border-teal-400 [&[open]]:shadow-sm">
+                <summary className="flex cursor-pointer items-center justify-between font-bold text-xs uppercase tracking-wide text-navy-950 hover:text-teal-600">
+                  <span>Can Ryetek develop equipment for another OEM?</span>
+                  <span className="ml-2 text-teal-500 font-bold transition-transform group-open:rotate-180">↓</span>
+                </summary>
+                <p className="mt-3 text-xs leading-relaxed text-navy-700/80 pt-2.5 border-t border-line-100">
+                  Potentially. The commercial model, confidentiality, ownership of background and project IP, design responsibility and manufacturing support should be agreed at the start.
+                </p>
+              </details>
+              <details className="group border border-line-200 bg-white p-5 transition-all [&[open]]:border-teal-400 [&[open]]:shadow-sm">
+                <summary className="flex cursor-pointer items-center justify-between font-bold text-xs uppercase tracking-wide text-navy-950 hover:text-teal-600">
+                  <span>Do you provide only drawings?</span>
+                  <span className="ml-2 text-teal-500 font-bold transition-transform group-open:rotate-180">↓</span>
+                </summary>
+                <p className="mt-3 text-xs leading-relaxed text-navy-700/80 pt-2.5 border-t border-line-100">
+                  The recommended service begins with duty and concept definition. Drawing-only work can create risk when the process basis and interfaces have not been established.
+                </p>
+              </details>
+            </div>
           </div>
 
           {/* Bottom Integrated CTA Card */}

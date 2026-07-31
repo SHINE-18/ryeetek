@@ -4,17 +4,25 @@ import { ShieldCheck, MapPin, ArrowRight, ArrowUpRight } from "lucide-react";
 import PhotoPlaceholder from "../components/PhotoPlaceholder";
 import SectionHeading from "../components/SectionHeading";
 import StatBar from "../components/StatBar";
+import SEO from "../components/SEO";
 import { capabilities, forWho } from "../data/capabilities";
 
 const PROCESS = [
-  { step: "01", title: "Scope & site review", body: "We define materials, capacity, site conditions and constraints before anything is specified." },
-  { step: "02", title: "Engineered supply & compliance", body: "Equipment is selected and documented against Australian design standards." },
-  { step: "03", title: "Installation, commissioning & handover", body: "Local support through to a clear, documented handover." },
+  { step: "01", title: "Define", body: "Confirm material, duty, capacity, site, interfaces, risks, target outcome and commercial boundaries." },
+  { step: "02", title: "Engineer", body: "Develop the process concept, layout, equipment scope, access, controls and project design basis." },
+  { step: "03", title: "Detail & verify", body: "Coordinate drawings, calculations, vendors, QA checkpoints, FAT requirements and documentation." },
+  { step: "04", title: "Deliver", body: "Support fabrication, shipment, installation planning, commissioning inputs and operator handover." },
+  { step: "05", title: "Support", body: "Plan spares, maintenance, future upgrades and performance review after start-up." },
 ];
 
 export default function Home() {
   return (
     <div>
+      <SEO
+        title="Industrial Plant Systems Australia | Ryetek Industrial Systems"
+        description="Ryetek engineers asphalt, concrete, bitumen storage, thermal, bulk handling, recycling and automation packages for Australian industrial projects."
+        path="/"
+      />
       {/* HERO */}
       <section className="relative overflow-hidden bg-navy-950 pt-28 pb-16 lg:pt-40 lg:pb-24">
         <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[45%] lg:block">
@@ -30,9 +38,9 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.05 }}
               className="font-display text-5xl font-bold uppercase leading-[0.98] text-white sm:text-6xl lg:text-7xl"
             >
-              Industrial Systems for
+              Industrial plant systems
               <br />
-              <span className="text-teal-400">Australian Projects</span>
+              <span className="text-teal-400">engineered for Australian operations.</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
@@ -193,7 +201,7 @@ export default function Home() {
             description="From first scope conversation to a documented handover, we act as one partner across the whole project."
           />
 
-          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
             {PROCESS.map((p, i) => (
               <motion.div
                 key={p.step}

@@ -87,6 +87,29 @@ const MOTIFS = {
       <circle cx="150" cy="70" r="14" />
     </g>
   ),
+  filter: (
+    <g stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.9">
+      <rect x="35" y="40" width="130" height="45" rx="3" />
+      <line x1="35" y1="58" x2="165" y2="58" />
+      <rect x="55" y="85" width="22" height="65" rx="3" />
+      <rect x="89" y="85" width="22" height="65" rx="3" />
+      <rect x="123" y="85" width="22" height="65" rx="3" />
+      <line x1="55" y1="105" x2="77" y2="105" strokeDasharray="2 3" />
+      <line x1="89" y1="105" x2="111" y2="105" strokeDasharray="2 3" />
+      <line x1="123" y1="105" x2="145" y2="105" strokeDasharray="2 3" />
+    </g>
+  ),
+  elevator: (
+    <g stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.9">
+      <line x1="65" y1="35" x2="65" y2="155" />
+      <line x1="135" y1="35" x2="135" y2="155" />
+      <path d="M65 45 L95 45 L90 65 L65 65 Z" />
+      <path d="M65 80 L95 80 L90 100 L65 100 Z" />
+      <path d="M65 115 L95 115 L90 135 L65 135 Z" />
+      <circle cx="100" cy="35" r="15" />
+      <circle cx="100" cy="155" r="15" />
+    </g>
+  ),
 };
 
 export default function PhotoPlaceholder({ motif = "silos", image, className = "", label }) {

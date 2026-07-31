@@ -1,13 +1,23 @@
 import { useState } from "react";
 import { Phone, Mail, MapPin, Globe, Send, CheckCircle2 } from "lucide-react";
 import PhotoPlaceholder from "../components/PhotoPlaceholder";
+import SEO from "../components/SEO";
 
 export default function Contact() {
   const [status, setStatus] = useState("idle"); // idle | sent
-  const [form, setForm] = useState({ name: "", email: "", company: "", message: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    company: "",
+    enquiryType: "",
+    industry: "",
+    message: "",
+    consent: false,
+  });
 
   function handleChange(e) {
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+    const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    setForm((f) => ({ ...f, [e.target.name]: value }));
   }
 
   function handleSubmit(e) {
@@ -18,6 +28,11 @@ export default function Contact() {
 
   return (
     <div>
+      <SEO
+        title="Contact Ryetek | Request an Industrial Equipment Scope"
+        description="Send your plant duty, drawing, upgrade problem or equipment requirement to Ryetek's industrial engineering team in Australia."
+        path="/contact"
+      />
       {/* HERO WITH BACKGROUND PHOTO */}
       <section className="relative overflow-hidden bg-navy-950 pt-28 pb-16 lg:pt-40 lg:pb-24">
         {/* Right side background hero photo overlay like Home page */}
@@ -148,19 +163,59 @@ export default function Contact() {
                   </div>
                 </div>
 
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <div>
+                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-navy-700">
+                      Email
+                    </label>
+                    <input
+                      required
+                      type="email"
+                      name="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      placeholder="you@company.com.au"
+                      className="w-full border border-line-200 bg-white px-3.5 py-2.5 text-sm text-navy-950 outline-none transition-colors focus:border-teal-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-navy-700">
+                      Enquiry Type
+                    </label>
+                    <select
+                      name="enquiryType"
+                      value={form.enquiryType}
+                      onChange={handleChange}
+                      className="w-full border border-line-200 bg-white px-3.5 py-2.5 text-sm text-navy-950 outline-none transition-colors focus:border-teal-500"
+                    >
+                      <option value="">Select enquiry type...</option>
+                      <option value="New system">New system</option>
+                      <option value="Upgrade / retrofit">Upgrade / retrofit</option>
+                      <option value="Wear parts / spares">Wear parts / spares</option>
+                      <option value="Engineering / custom development">Engineering / custom development</option>
+                    </select>
+                  </div>
+                </div>
+
                 <div>
                   <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-navy-700">
-                    Email
+                    Industry
                   </label>
-                  <input
-                    required
-                    type="email"
-                    name="email"
-                    value={form.email}
+                  <select
+                    name="industry"
+                    value={form.industry}
                     onChange={handleChange}
-                    placeholder="you@company.com.au"
                     className="w-full border border-line-200 bg-white px-3.5 py-2.5 text-sm text-navy-950 outline-none transition-colors focus:border-teal-500"
-                  />
+                  >
+                    <option value="">Select industry...</option>
+                    <option value="Roads & asphalt">Roads & asphalt</option>
+                    <option value="Concrete & precast">Concrete & precast</option>
+                    <option value="Quarries & aggregates">Quarries & aggregates</option>
+                    <option value="Mining & minerals">Mining & minerals</option>
+                    <option value="Recycling & recovery">Recycling & recovery</option>
+                    <option value="Industrial manufacturing">Industrial manufacturing</option>
+                    <option value="Other">Other</option>
+                  </select>
                 </div>
 
                 <div>
@@ -169,13 +224,28 @@ export default function Contact() {
                   </label>
                   <textarea
                     required
-                    rows={5}
+                    rows={4}
                     name="message"
                     value={form.message}
                     onChange={handleChange}
                     placeholder="Tell us about your equipment requirement, plant upgrade, wear parts need, or engineering scope..."
                     className="w-full border border-line-200 bg-white px-3.5 py-2.5 text-sm text-navy-950 outline-none transition-colors focus:border-teal-500"
                   />
+                </div>
+
+                <div className="flex items-center gap-2.5">
+                  <input
+                    required
+                    type="checkbox"
+                    id="consent"
+                    name="consent"
+                    checked={form.consent}
+                    onChange={handleChange}
+                    className="h-4 w-4 rounded border-line-200 accent-teal-500"
+                  />
+                  <label htmlFor="consent" className="text-xs text-navy-700/80 cursor-pointer">
+                    I consent to Ryetek storing this information to respond to my enquiry.
+                  </label>
                 </div>
 
                 <button

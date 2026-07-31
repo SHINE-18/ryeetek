@@ -52,7 +52,11 @@ export const capabilities = [
       { title: "Engineered Solutions", body: "Designed and built to suit your materials, capacity and site conditions." },
       { title: "Built for Australia", body: "Australian-facing design standards, documentation and local support." },
       { title: "Focus on Uptime", body: "Reliable equipment, smart engineering and fast support." },
-      { title: "Partner Approach", body: "From concept to commissioning and beyond — we're with you all the way." },
+      { title: "Partner Approach", body: "From concept to commissioning and beyond, we are with you all the way." },
+    ],
+    faqs: [
+      { q: "Can Ryetek upgrade an existing asphalt plant without replacing the whole plant?", a: "Yes, where the existing equipment and structure remain suitable. The first step is to identify the actual bottleneck, condition, interfaces and control limitations before deciding what should be retained or replaced." },
+      { q: "Does Ryetek supply complete plants or individual equipment?", a: "The scope can range from a mixer, conveyor, silo or control upgrade to a coordinated plant package, depending on the project requirement and agreed responsibilities." }
     ],
   },
   {
@@ -86,6 +90,10 @@ export const capabilities = [
       { title: "Plant Upgrades", body: "Retrofit-friendly packages for depots, mobile asphalt plants and fuel bottles." },
       { title: "Remote Support", body: "Telemetry, alarm logic and planned spare can support regional questions." },
     ],
+    faqs: [
+      { q: "Which heating method is best for a bitumen tank?", a: "The answer depends on binder, tank size, heat-up time, standby duty, energy availability, maintenance capability and local requirements, selected on a heat-duty basis rather than a generic preference." },
+      { q: "Are all bitumen tanks pressure vessels?", a: "No. The applicable design standard depends on the actual operating pressure and equipment configuration. Project-specific engineering must determine the correct standard and hazard classification." }
+    ],
   },
   {
     id: "process-systems",
@@ -98,7 +106,7 @@ export const capabilities = [
     summary:
       "Integrated process equipment packages built around throughput, material behaviour and operating reliability.",
     description:
-      "For industrial buyers, a reliable system is more than a set of machines. Ryetek defines the full process path — feed, heat, mix, dose, store, transfer, control and maintain — so the equipment works as one practical package.",
+      "For industrial buyers, a reliable system is more than a set of machines. Ryetek defines the full process path: feed, heat, mix, dose, store, transfer, control and maintain, so the equipment works as one practical package.",
     groups: [
       {
         icon: FlaskConical,
@@ -118,6 +126,10 @@ export const capabilities = [
       { title: "Performance Logic", body: "Throughput, residence time, heating load and material flow are considered early." },
       { title: "Practical Integration", body: "Mechanical interfaces, instrumentation and controls are planned together." },
     ],
+    faqs: [
+      { q: "How do you choose between batch and continuous mixing?", a: "The choice depends on recipe variation, traceability, production pattern, residence time, control requirement and how upstream and downstream equipment operate." },
+      { q: "Can an existing mixer be upgraded?", a: "Potentially. The condition, drive, structure, liners, shaft/seal arrangement, controls and process bottleneck must be assessed before the scope is defined." }
+    ],
   },
   {
     id: "thermal-systems",
@@ -130,7 +142,7 @@ export const capabilities = [
     summary:
       "Industrial heating and drying systems for controlled heat transfer, energy use and uptime.",
     description:
-      "Thermal equipment has to balance output, safety, heat loss, controls, service access and operating cost. Ryetek delivers engineered thermal systems selected around duty — not generic catalogue assumptions.",
+      "Thermal equipment has to balance output, safety, heat loss, controls, service access and operating cost. Ryetek delivers engineered thermal systems selected around duty, not generic catalogue assumptions.",
     groups: [
       {
         icon: Flame,
@@ -149,6 +161,10 @@ export const capabilities = [
       { title: "Energy discipline", body: "Insulation, controls and every option reduce wasted heat where practical." },
       { title: "Safety by layout", body: "Combustion, hot-oil, electrical and access risks are addressed in the project pathway." },
       { title: "Serviceability", body: "Burners, pumps, valves, controls and instrumentation are arranged for maintenance." },
+    ],
+    faqs: [
+      { q: "How is an industrial dryer selected?", a: "Selection begins with the material, required heat and mass transfer, residence time, product sensitivity, dust behaviour, available energy and maintenance requirements. Capacity alone is not enough." },
+      { q: "Can waste heat be used?", a: "Potentially. The temperature, flow, contamination, variability and availability of the heat source must be assessed against the process duty and controls required." }
     ],
   },
   {
@@ -182,6 +198,10 @@ export const capabilities = [
       { title: "Site-Fit Execution", body: "Conveyors and storage can be configured around truck flow, plant layout and civil works." },
       { title: "Safety Aware", body: "Access, guarding, dust and maintenance interfaces are included early in scope definition." },
     ],
+    faqs: [
+      { q: "What information is needed to size a conveyor?", a: "Material bulk density and particle size, required throughput, conveyor length and lift, incline, loading method, operating hours, environmental conditions and transfer requirements are the minimum useful inputs." },
+      { q: "Which conveyor safety standards apply?", a: "The applicable requirements depend on conveyor type and project. For belt conveyors handling bulk materials, the AS/NZS 4024.3610 and 4024.3611 series should be considered." }
+    ],
   },
   {
     id: "material-processing",
@@ -194,7 +214,7 @@ export const capabilities = [
     summary:
       "Mixing, dosing, weighing, screening and processing equipment for controlled material transformation.",
     description:
-      "When materials must be blended, metered, reacted, dried or separated, the equipment must be selected for behaviour — not just capacity. Ryetek positions processing systems that help operators achieve repeatable output with less waste and easier maintenance.",
+      "When materials must be blended, metered, reacted, dried or separated, the equipment must be selected for behaviour, not just capacity. Ryetek positions processing systems that help operators achieve repeatable output with less waste and easier maintenance.",
     groups: [
       {
         icon: Cog,
@@ -213,6 +233,10 @@ export const capabilities = [
       { title: "Robust Drives", body: "Drive arrangements, shafts, seals and gearboxes are selected for duty and maintenance." },
       { title: "Modular Upgrades", body: "Existing lines can be improved with dosing, weighing, mixing modules." },
       { title: "Process Control", body: "Instrumentation and logic can support repeatability, traceability and operator confidence." },
+    ],
+    faqs: [
+      { q: "How do you choose between batch and continuous mixing?", a: "The choice depends on recipe variation, traceability, production pattern, residence time, control requirement and how upstream and downstream equipment operate." },
+      { q: "Can an existing mixer be upgraded?", a: "Potentially. The condition, drive, structure, liners, shaft/seal arrangement, controls and process bottleneck must be assessed before the scope is defined." }
     ],
   },
   {
@@ -241,10 +265,14 @@ export const capabilities = [
       },
     ],
     highlights: [
-      { title: "Circular Value", body: "Systems are built to never usable material while creating continuous and process risk." },
+      { title: "Circular Value", body: "Systems are built to recover usable material while managing process risk." },
       { title: "Built for Variability", body: "Recycled materials change in moisture, grading, shape and flow — equipment must allow for it." },
       { title: "Lower Waste Cost", body: "Better recovery, metering and reuse can reduce disposal and virgin material demand." },
       { title: "Integration First", body: "Recycling lines are planned around the existing plant, not as isolated add-ons." },
+    ],
+    faqs: [
+      { q: "Can a recycling system be added to an existing plant?", a: "Yes, subject to space, structure, process capacity, dust/emissions, controls and the ability of the existing plant to accept the recovered material." },
+      { q: "What data should be measured?", a: "At minimum: recovered feed mass, moisture or condition where relevant, rejects, operating hours, downtime and the effect on main-plant quality and energy." }
     ],
   },
   {
@@ -278,6 +306,10 @@ export const capabilities = [
       { title: "Electrical discipline", body: "Local completion and certification pathways are considered for Australian supply." },
       { title: "Data advantage", body: "Monitoring can support uptime, maintenance planning and performance visibility." },
     ],
+    faqs: [
+      { q: "Can old controls be replaced without replacing the whole plant?", a: "Often yes. The retrofit plan should verify field devices, drives, safety circuits, wiring condition, process logic and the shutdown/commissioning sequence." },
+      { q: "Can remote monitoring be included?", a: "Yes, subject to client cyber-security rules, network availability, access control, data ownership and the agreed support model." }
+    ],
   },
   {
     id: "engineering-rd",
@@ -310,6 +342,10 @@ export const capabilities = [
       { title: "Buildable Detail", body: "Designs are developed around fabrication, assembly, transport and site installation realities." },
       { title: "Commercial Clarity", body: "Scope boundaries, assumptions and project inputs are stated early to reduce disputes." },
     ],
+    faqs: [
+      { q: "Can Ryetek develop equipment for another OEM?", a: "Potentially. The commercial model, confidentiality, ownership of background and project IP, design responsibility and manufacturing support should be agreed at the start." },
+      { q: "Do you provide only drawings?", a: "The recommended service begins with duty and concept definition. Drawing-only work can create risk when the process basis and interfaces have not been established." }
+    ],
   },
   {
     id: "machine-parts",
@@ -341,6 +377,10 @@ export const capabilities = [
       { title: "Lower Downtime", body: "Fast replacement parts and planned change-outs help reduce stoppages." },
       { title: "Better Protection", body: "Critical plant areas can be shielded with impact, abrasion and premature failure in mind." },
       { title: "Maintenance Ready", body: "Wear parts can be grouped into practical replacement sets for easier servicing." },
+    ],
+    faqs: [
+      { q: "Can Ryetek match an obsolete part?", a: "A part may be reverse-engineered from a drawing, sample or verified site measurements, subject to suitability, tolerances, material selection and design responsibility." },
+      { q: "Can wear parts be supplied as a complete set?", a: "Yes. Grouping parts, hardware and critical spares by planned shutdown can reduce missed items and change-out delays." }
     ],
   },
 ];

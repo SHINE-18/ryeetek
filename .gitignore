@@ -1,4 +1,4 @@
-# Logs
+# Logs & Caches
 logs
 *.log
 npm-debug.log*
@@ -6,11 +6,18 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+.cache
+.npm
 
 # Dependencies & Build Output
 node_modules
 dist
 dist-ssr
+build
+.netlify
+
+# Extracted temp folders & source assets
+ilovepdf_images-extracted/
 *.local
 
 # Environment variables
@@ -20,11 +27,15 @@ dist-ssr
 .env.test.local
 .env.production.local
 
-# Editor directories and files
+# OS system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor & IDE directories
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
