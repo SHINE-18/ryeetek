@@ -98,10 +98,12 @@ export default function PhotoPlaceholder({ motif = "silos", image, className = "
     >
       {image && !imgError ? (
         <img
-          src={image}
+          src={image.startsWith("/") ? `${import.meta.env.BASE_URL}${image.slice(1)}` : image}
           alt={label || motif}
           onError={() => setImgError(true)}
           className="h-full w-full object-cover"
+          loading="eager"
+          decoding="async"
         />
       ) : (
         <svg
