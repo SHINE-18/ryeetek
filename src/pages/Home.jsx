@@ -59,15 +59,23 @@ export default function Home() {
             >
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 bg-teal-500 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-navy-950 transition-colors hover:bg-teal-400"
+                className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-sm bg-teal-500 px-6 py-3.5 font-display text-sm font-bold uppercase tracking-wider text-navy-950 transition-all duration-300 hover:-translate-y-0.5"
               >
-                Discuss a project <ArrowRight size={16} />
+                <span className="absolute inset-0 bg-teal-300 transition-transform duration-300 ease-out -translate-x-full group-hover:translate-x-0" />
+                <span className="relative z-10 flex items-center gap-2.5">
+                  <span>Discuss a project</span>
+                  <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
               </Link>
               <Link
                 to="/capabilities"
-                className="inline-flex items-center gap-2 border border-white/25 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:border-white/60"
+                className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-sm border border-white/30 bg-white/5 px-6 py-3.5 font-display text-sm font-bold uppercase tracking-wider text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:text-navy-950"
               >
-                View capabilities
+                <span className="absolute inset-0 bg-white transition-transform duration-300 ease-out -translate-x-full group-hover:translate-x-0" />
+                <span className="relative z-10 flex items-center gap-2.5">
+                  <span>View capabilities</span>
+                  <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
               </Link>
             </motion.div>
 

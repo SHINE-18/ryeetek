@@ -12,6 +12,7 @@ import {
   Filter,
   Layers,
   Sparkles,
+  ChevronDown,
 } from "lucide-react";
 import PhotoPlaceholder from "../components/PhotoPlaceholder";
 import SectionHeading from "../components/SectionHeading";
@@ -27,7 +28,7 @@ const BENEFITS = [
 const ENGINEERING = [
   {
     title: "Exact OEM Match & Improvement",
-    body: "Dimensionally identical to OEM spec, with upgraded metallurgy (higher alloy, targeted chill) to increase wear life in high-abrasion zones.",
+    body: "Dimensionally identical to OEM spec, with upgraded metallurgy higher alloy, to increase wear life in high-abrasion zones.",
   },
   {
     title: "Short Lead Times & Local Holding",
@@ -93,7 +94,7 @@ export default function WearGuard() {
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-amber-400">
               A Ryetek Industrial Systems product line
             </p>
-            <h1 className="font-display text-5xl font-bold uppercase leading-[0.98] text-white sm:text-6xl">
+            <h1 className="font-display text-4xl font-bold uppercase leading-[1.02] text-white sm:text-5xl lg:text-6xl">
               Wear<span className="text-amber-400">Guard</span>
             </h1>
             <p className="mt-2 text-sm font-semibold uppercase tracking-[0.3em] text-white/50">
@@ -107,39 +108,19 @@ export default function WearGuard() {
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 bg-amber-400 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-navy-950 transition-colors hover:bg-amber-300"
+                className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-sm bg-amber-400 px-6 py-3.5 font-display text-sm font-bold uppercase tracking-wider text-navy-950 transition-all duration-300 hover:-translate-y-0.5"
               >
-                Request a wear audit <ArrowRight size={16} />
+                <span className="absolute inset-0 bg-amber-300 transition-transform duration-300 ease-out -translate-x-full group-hover:translate-x-0" />
+                <span className="relative z-10 flex items-center gap-2.5">
+                  <span>Request a wear audit</span>
+                  <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Quick-Jump Chip Bar */}
-      <div className="sticky top-16 lg:top-20 z-30 border-b border-white/10 bg-navy-950/90 py-3 backdrop-blur-md">
-        <div className="container-xl flex flex-wrap items-center gap-2 text-xs">
-          <span className="mr-1 text-[11px] font-bold uppercase tracking-wider text-amber-400">Quick Jump:</span>
-          {[
-            { id: "dryer-drums", label: "Dryer Drums" },
-            { id: "filter-components", label: "Filter Components" },
-            { id: "mixer-shafts", label: "Mixer Shafts & Arms" },
-            { id: "elevators-conveyors", label: "Elevators & Conveyors" },
-            { id: "wear-liners", label: "Wear Liners" },
-            { id: "material-technologies", label: "Material Tech" },
-            { id: "wear-selection", label: "Wear Selection Table" },
-            { id: "earthmoving-tips", label: "Bucket Tips" },
-          ].map((chip) => (
-            <a
-              key={chip.id}
-              href={`#${chip.id}`}
-              className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 transition-all hover:border-amber-400 hover:bg-amber-400/10 hover:text-amber-300"
-            >
-              {chip.label}
-            </a>
-          ))}
-        </div>
-      </div>
 
       {/* Benefits */}
       <section className="section-pad bg-white">
@@ -160,11 +141,14 @@ export default function WearGuard() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.08 }}
-                  className="border border-line-200 p-6"
+                  className="group relative overflow-hidden border border-line-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-amber-400 hover:shadow-md hover:shadow-amber-900/5"
                 >
+                  {/* Top gradient highlight bar */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-amber-500 opacity-0 transition-opacity group-hover:opacity-100" />
+
                   <Icon className="text-amber-500" size={26} strokeWidth={1.7} />
                   <h3 className="mt-4 text-sm font-semibold text-navy-950">{b.title}</h3>
-                  <p className="mt-2 text-xs leading-relaxed text-navy-700/70">{b.body}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-navy-800">{b.body}</p>
                 </motion.div>
               );
             })}
@@ -184,7 +168,7 @@ export default function WearGuard() {
             <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-amber-600">
               Custom engineering
             </p>
-            <h2 className="font-display text-3xl font-bold uppercase leading-tight text-navy-950 sm:text-4xl">
+            <h2 className="font-display text-3xl font-bold uppercase leading-tight text-navy-950 sm:text-4xl lg:text-5xl">
               Engineered to suit your needs
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-navy-700/80">
@@ -201,10 +185,10 @@ export default function WearGuard() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.08 }}
-                className="border-l-2 border-amber-400 bg-white p-5"
+                className="group border border-line-200 border-l-2 border-l-amber-400 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-l-4 hover:border-l-amber-500 hover:shadow-md hover:shadow-amber-900/5"
               >
-                <h3 className="text-sm font-semibold text-navy-950">{e.title}</h3>
-                <p className="mt-1.5 text-xs leading-relaxed text-navy-700/70">{e.body}</p>
+                <h3 className="font-display text-base font-extrabold uppercase tracking-wider text-amber-600">{e.title}</h3>
+                <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-navy-700/75">{e.body}</p>
               </motion.div>
             ))}
           </div>
@@ -212,7 +196,7 @@ export default function WearGuard() {
       </section>
 
       {/* SECTION 1: Dryer Drum Components & Retrofits */}
-      <section id="dryer-drums" className="scroll-mt-32 section-pad bg-white">
+      <section id="dryer-drums" className="scroll-mt-20 section-pad bg-white">
         <div className="container-xl">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 lg:items-center">
             <motion.div
@@ -238,24 +222,24 @@ export default function WearGuard() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <span className="mb-3 inline-block rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-bold uppercase tracking-widest text-amber-700">
-                Any brand. Any era.
-              </span>
-              <h2 className="font-display text-3xl font-bold uppercase leading-[1.05] text-navy-950 sm:text-4xl">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
+                — Any brand. Any era.
+              </p>
+              <h2 className="font-display text-3xl font-bold uppercase leading-[1.05] text-navy-950 sm:text-4xl lg:text-5xl">
                 Dryer Drum Components <span className="text-amber-500">& Retrofits</span>
               </h2>
-              <p className="mt-4 text-xs leading-relaxed text-navy-700/80 sm:text-sm">
+              <p className="mt-4 text-sm leading-relaxed text-navy-800 sm:text-sm">
                 We don't just rebuild or supply dryer drums; we engineer better drying performance.
                 WearGuard retrofits combine CFD-analyzed flighting, optimized material curtains and
                 wear-reducing technologies to improve heat transfer, moisture removal, retention time and mixing
                 while lowering fuel, power and energy consumption.
               </p>
 
-              <div className="mt-6 border-l-2 border-amber-400 bg-paper-50 p-5">
-                <h4 className="text-xs font-bold uppercase tracking-wide text-navy-950">
+              <div className="mt-6 group border border-line-200 border-l-2 border-l-amber-400 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-l-4 hover:border-l-amber-500 hover:shadow-md hover:shadow-amber-900/5">
+                <h4 className="font-display text-base font-extrabold uppercase tracking-wider text-amber-600">
                   Engineering Assistance & Support
                 </h4>
-                <p className="mt-1.5 text-xs leading-relaxed text-navy-700/75">
+                <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-navy-700/75">
                   At WearGuard, you receive more than high-quality replacement parts. You gain access to global specialists in dryer engineering who bring the knowledge, analysis and practical support required to diagnose operating challenges, identify the right upgrades and improve the efficiency, reliability and performance of your drying system.
                 </p>
               </div>
@@ -294,7 +278,7 @@ export default function WearGuard() {
       </section>
 
       {/* SECTION 2: Filter Components */}
-      <section id="filter-components" className="scroll-mt-32 section-pad bg-paper-100 border-t border-line-200">
+      <section id="filter-components" className="scroll-mt-20 section-pad bg-paper-100 border-t border-line-200">
         <div className="container-xl">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 lg:items-center">
             <motion.div
@@ -304,24 +288,24 @@ export default function WearGuard() {
               transition={{ duration: 0.5 }}
               className="lg:order-1"
             >
-              <span className="mb-3 inline-block rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-bold uppercase tracking-widest text-amber-700">
-                Premium performing filter elements
-              </span>
-              <h2 className="font-display text-3xl font-bold uppercase leading-[1.05] text-navy-950 sm:text-4xl">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
+                — Premium performing filter elements
+              </p>
+              <h2 className="font-display text-3xl font-bold uppercase leading-[1.05] text-navy-950 sm:text-4xl lg:text-5xl">
                 Filter <span className="text-amber-500">Components</span>
               </h2>
-              <p className="mt-4 text-xs leading-relaxed text-navy-700/80 sm:text-sm">
+              <p className="mt-4 text-sm leading-relaxed text-navy-800 sm:text-sm">
                 We don't just supply filter bags and cages; we engineer cleaner airflow and dependable
                 filtration. WearGuard offers Nomex® and meta-aramid bags in 400–650 gsm and other options,
                 stainless steel snap rings, precision cages with high-temperature resistant treatments, and
                 corrosion-resistant stainless-steel alternatives for demanding applications.
               </p>
 
-              <div className="mt-6 border-l-2 border-amber-400 bg-white p-5 shadow-sm">
-                <h4 className="text-xs font-bold uppercase tracking-wide text-navy-950">
+              <div className="mt-6 group border border-line-200 border-l-2 border-l-amber-400 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-l-4 hover:border-l-amber-500 hover:shadow-md hover:shadow-amber-900/5">
+                <h4 className="font-display text-base font-extrabold uppercase tracking-wider text-amber-600">
                   Stainless Steel Protection
                 </h4>
-                <p className="mt-1.5 text-xs leading-relaxed text-navy-700/75">
+                <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-navy-700/75">
                   For highly corrosive, humid and abrasive conditions, opt for the custom designed stainless steel cages, filter covers & plenum plates to enjoy long trouble free life.
                 </p>
               </div>
@@ -348,7 +332,7 @@ export default function WearGuard() {
       </section>
 
       {/* SECTION 3: Mixer Components & Shafts */}
-      <section id="mixer-shafts" className="scroll-mt-32 section-pad bg-white border-t border-line-200">
+      <section id="mixer-shafts" className="scroll-mt-20 section-pad bg-white border-t border-line-200">
         <div className="container-xl">
           <SectionHeading
             kicker="Engineered to outlast the mix"
@@ -399,14 +383,17 @@ export default function WearGuard() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.45, delay: i * 0.1 }}
-                  className="overflow-hidden border border-line-200 bg-white"
+                  className="group relative overflow-hidden border border-line-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:border-amber-400 hover:shadow-md hover:shadow-amber-900/5"
                 >
+                  {/* Top gradient highlight bar */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-amber-500 opacity-0 transition-opacity group-hover:opacity-100" />
+                  
                   <PhotoPlaceholder motif={p.motif} image={p.image} className="aspect-[16/10] w-full" label={p.badge} />
                   <div className="p-6">
                     <h4 className="font-display text-base font-bold uppercase text-navy-950">
                       {p.name}
                     </h4>
-                    <p className="mt-2 text-xs leading-relaxed text-navy-700/70">{p.body}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-navy-800">{p.body}</p>
                     <ul className="mt-4 space-y-1.5 border-t border-line-100 pt-3">
                       {p.items.map((item) => (
                         <li key={item} className="flex items-center gap-2 text-xs text-navy-700/80">
@@ -424,7 +411,7 @@ export default function WearGuard() {
       </section>
 
       {/* SECTION 4: Bucket Elevators & Drag Conveyors */}
-      <section id="elevators-conveyors" className="scroll-mt-32 section-pad bg-paper-100 border-t border-line-200">
+      <section id="elevators-conveyors" className="scroll-mt-20 section-pad bg-paper-100 border-t border-line-200">
         <div className="container-xl">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 lg:items-center">
             <motion.div
@@ -450,13 +437,13 @@ export default function WearGuard() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <span className="mb-3 inline-block rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-bold uppercase tracking-widest text-amber-700">
-                Elevating, conveying & loading
-              </span>
-              <h2 className="font-display text-3xl font-bold uppercase leading-[1.05] text-navy-950 sm:text-4xl">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
+                — Elevating, conveying & loading
+              </p>
+              <h2 className="font-display text-3xl font-bold uppercase leading-[1.05] text-navy-950 sm:text-4xl lg:text-5xl">
                 Bucket Elevators & <span className="text-amber-500">Drag Conveyors</span>
               </h2>
-              <p className="mt-4 text-xs leading-relaxed text-navy-700/80 sm:text-sm">
+              <p className="mt-4 text-sm leading-relaxed text-navy-800 sm:text-sm">
                 WearGuard delivers engineered protection for bucket elevators, conveyors and loading
                 zones exposed to continuous abrasive and impact. Our range includes elevator buckets, reinforced
                 lips, wear strips, chain and sprocket components, conveyor skirts and replaceable impact
@@ -465,11 +452,11 @@ export default function WearGuard() {
                 asphalt, aggregate, cement and industrial handling applications.
               </p>
 
-              <div className="mt-6 border-l-2 border-amber-400 bg-white p-5 shadow-sm">
-                <h4 className="text-xs font-bold uppercase tracking-wide text-navy-950">
+              <div className="mt-6 group border border-line-200 border-l-2 border-l-amber-400 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-l-4 hover:border-l-amber-500 hover:shadow-md hover:shadow-amber-900/5">
+                <h4 className="font-display text-base font-extrabold uppercase tracking-wider text-amber-600">
                   Chain, Sprockets & Wear Components
                 </h4>
-                <p className="mt-1.5 text-xs leading-relaxed text-navy-700/75">
+                <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-navy-700/75">
                   Engineered chain-related parts, sprocket wear components and replaceable strips help maintain alignment, dependable drive performance and longer service intervals.
                 </p>
               </div>
@@ -479,7 +466,7 @@ export default function WearGuard() {
       </section>
 
       {/* SECTION 5: Flow & Wear Liners */}
-      <section id="wear-liners" className="scroll-mt-32 section-pad bg-white border-t border-line-200">
+      <section id="wear-liners" className="scroll-mt-20 section-pad bg-white border-t border-line-200">
         <div className="container-xl">
           <SectionHeading
             kicker="Engineered wear protection for every critical transfer zone"
@@ -488,30 +475,44 @@ export default function WearGuard() {
             description="WearGuard protects the high-impact zones where bulk materials change direction, accelerate and strike equipment surfaces. Our engineered chute, hopper and transfer-point solutions include liners, skirt systems, impact plates, rock-box components and bolt-in wear assemblies. Each system is tailored to material size, velocity, moisture and abrasion severity, helping reduce structural damage, simplify replacement, extend service intervals and keep critical material-handling points operating with fewer interruptions, greater reliability and lower maintenance costs."
           />
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-            {[
-              "Mixer Liners",
-              "Hopper Liners",
-              "Bin Liners",
-              "Skirt Liners",
-              "Impact Plates",
-              "Rock-Box Components",
-              "Wear Blocks",
-            ].map((tag) => (
-              <span
-                key={tag}
-                className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-amber-800"
-              >
-                <CheckCircle2 size={13} className="text-amber-600" />
-                {tag}
-              </span>
-            ))}
+          {/* Section 5 Ticker Carousel (Natural Smooth Marquee) */}
+          <div className="mt-8 overflow-hidden relative w-full">
+            <motion.div
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+              className="flex w-max gap-3 py-1"
+            >
+              {[
+                "Mixer Liners",
+                "Hopper Liners",
+                "Bin Liners",
+                "Skirt Liners",
+                "Impact Plates",
+                "Rock-Box Components",
+                "Wear Blocks",
+                "Mixer Liners",
+                "Hopper Liners",
+                "Bin Liners",
+                "Skirt Liners",
+                "Impact Plates",
+                "Rock-Box Components",
+                "Wear Blocks",
+              ].map((tag, idx) => (
+                <span
+                  key={idx}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-navy-950/10 bg-paper-50 px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-navy-950 shadow-sm whitespace-nowrap"
+                >
+                  <CheckCircle2 size={13} className="text-amber-500 shrink-0" />
+                  {tag}
+                </span>
+              ))}
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* SECTION 6: Material Technologies */}
-      <section id="material-technologies" className="scroll-mt-32 section-pad bg-paper-100 border-t border-line-200">
+      <section id="material-technologies" className="scroll-mt-20 section-pad bg-paper-100 border-t border-line-200">
         <div className="container-xl">
           <SectionHeading
             kicker="Application-engineered materials for longer service life"
@@ -520,39 +521,54 @@ export default function WearGuard() {
             description="WearGuard combines advanced materials with application-specific engineering to solve difficult wear problems. Solutions include abrasive-resistant steel, hardfaced plates, premium castings, ceramic liners, rubber-ceramic systems, polymers and low-friction materials. Replaceable sacrificial strips and inserts protect structural components while simplifying maintenance. By matching material technology to impact, abrasion, temperature, corrosion and flow conditions, we deliver longer service life, improved reliability and lower total ownership cost across demanding industrial equipment and process applications."
           />
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-            {[
-              "Wear Steel",
-              "Hardfaced Plate",
-              "Premium Castings",
-              "Ceramic Liners",
-              "Rubber-Ceramic",
-              "Polymer Liners",
-              "Sacrificial Inserts",
-            ].map((tag) => (
-              <span
-                key={tag}
-                className="inline-flex items-center gap-1.5 rounded-full border border-navy-950/15 bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-navy-950 shadow-sm"
-              >
-                <Sparkles size={13} className="text-amber-500" />
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <div className="mt-10 max-w-3xl mx-auto border-l-2 border-amber-400 bg-white p-6 shadow-sm">
-            <h4 className="text-xs font-bold uppercase tracking-wide text-navy-950">
+          {/* Right Material Card - Placed above the sliding pills (Left-aligned) */}
+          <div className="mt-8 max-w-3xl group border border-line-200 border-l-2 border-l-amber-400 bg-white p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-l-4 hover:border-l-amber-500 hover:shadow-md hover:shadow-amber-900/5">
+            <h4 className="font-display text-base font-extrabold uppercase tracking-wider text-amber-600">
               Right Material for the Right Wear Zone
             </h4>
-            <p className="mt-1.5 text-xs leading-relaxed text-navy-700/75">
+            <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-navy-700/75">
               Premium wear plate and hardfaced components provide robust protection in high-abrasion zones exposed to sliding, scraping and continuous material flow.
             </p>
+          </div>
+
+          {/* Section 6 Ticker Carousel (Natural Smooth Marquee) */}
+          <div className="mt-8 overflow-hidden relative w-full">
+            <motion.div
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+              className="flex w-max gap-3 py-1"
+            >
+              {[
+                "Wear Steel",
+                "Hardfaced Plate",
+                "Premium Castings",
+                "Ceramic Liners",
+                "Rubber-Ceramic",
+                "Polymer Liners",
+                "Sacrificial Inserts",
+                "Wear Steel",
+                "Hardfaced Plate",
+                "Premium Castings",
+                "Ceramic Liners",
+                "Rubber-Ceramic",
+                "Polymer Liners",
+                "Sacrificial Inserts",
+              ].map((tag, idx) => (
+                <span
+                  key={idx}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-navy-950/15 bg-white px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-navy-950 shadow-sm whitespace-nowrap"
+                >
+                  <Sparkles size={13} className="text-amber-500 shrink-0" />
+                  {tag}
+                </span>
+              ))}
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* SECTION 7: Wear Solution Selection Table */}
-      <section id="wear-selection" className="scroll-mt-32 section-pad bg-white border-t border-line-200">
+      <section id="wear-selection" className="scroll-mt-20 section-pad bg-white border-t border-line-200">
         <div className="container-xl">
           <SectionHeading
             kicker="Technical Specifications"
@@ -561,98 +577,82 @@ export default function WearGuard() {
             description="Custom-built wear materials for abrasion, impact, erosion and high-temperature service."
           />
 
-          <div className="mt-10 overflow-x-auto border border-line-200 shadow-sm rounded-lg">
-            <table className="w-full text-left text-xs text-navy-950 min-w-[680px]">
-              <thead className="bg-navy-950 text-white font-bold uppercase tracking-wider text-[11px]">
-                <tr>
-                  <th className="p-4 w-1/3">Product</th>
-                  <th className="p-4 w-1/4">Hardness / Grade</th>
-                  <th className="p-4">Recommended Use</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-line-200">
-                {/* Group 1 */}
-                <tr className="bg-amber-500/10 border-l-4 border-amber-500">
-                  <td colSpan={3} className="p-3.5 font-bold uppercase text-navy-950 text-[11px] tracking-wide">
-                    WearGuard Designed & Cut to Shape Parts
-                  </td>
-                </tr>
-                <tr className="hover:bg-paper-50 transition-colors">
-                  <td className="p-3.5 font-bold">WearGuard P400</td>
-                  <td className="p-3.5 text-navy-700 font-medium">400 BHN</td>
-                  <td className="p-3.5 text-navy-700/85">Recommended for normal wear applications in asphalt, cement, mining and steel industries. Ideal for liners, chutes, buckets and similar components.</td>
-                </tr>
-                <tr className="hover:bg-paper-50 transition-colors">
-                  <td className="p-3.5 font-bold">WearGuard P450</td>
-                  <td className="p-3.5 text-navy-700 font-medium">450 BHN</td>
-                  <td className="p-3.5 text-navy-700/85">For high wear applications in asphalt, mining and steel industries. Suitable for heavy-duty components such as mixer liners.</td>
-                </tr>
-                <tr className="hover:bg-paper-50 transition-colors">
-                  <td className="p-3.5 font-bold">WearGuard P500</td>
-                  <td className="p-3.5 text-navy-700 font-medium">500 BHN</td>
-                  <td className="p-3.5 text-navy-700/85">For superior high wear applications in asphalt, cement, mining and steel industries. Ideal for mixer tips and wear edges.</td>
-                </tr>
-
-                {/* Group 2 */}
-                <tr className="bg-amber-500/10 border-l-4 border-amber-500">
-                  <td colSpan={3} className="p-3.5 font-bold uppercase text-navy-950 text-[11px] tracking-wide">
-                    EnduraCast Z-Core Liners — tough specially abrasion resistant lined parts
-                  </td>
-                </tr>
-                <tr className="hover:bg-paper-50 transition-colors">
-                  <td className="p-3.5 font-bold">EnduraCast Z-Core Liners</td>
-                  <td className="p-3.5 text-navy-700 font-medium">58–62 HRC</td>
-                  <td className="p-3.5 text-navy-700/85">For extreme abrasive and erosive wear applications in asphalt, cement, mining and steel industries. Available in 6 to 24 mm tinsel.</td>
-                </tr>
-                <tr className="hover:bg-paper-50 transition-colors">
-                  <td className="p-3.5 font-bold">EnduraCast Ultra Liners</td>
-                  <td className="p-3.5 text-navy-700 font-medium">60–65 HRC</td>
-                  <td className="p-3.5 text-navy-700/85">Best for recycling needs. For extreme abrasive and high erosive wear applications in asphalt, cement, mining and steel industries. Available in 100% to 20 mm.</td>
-                </tr>
-                <tr className="hover:bg-paper-50 transition-colors">
-                  <td className="p-3.5 font-bold">EnduraCast Z-Core Max Liners</td>
-                  <td className="p-3.5 text-navy-700 font-medium">60–65 HRC</td>
-                  <td className="p-3.5 text-navy-700/85">Best for high-temperature recycling needs. For extreme abrasive and high erosive wear within the asphalt and steel industries. Available in 100% to 20 mm.</td>
-                </tr>
-
-                {/* Group 3 */}
-                <tr className="bg-amber-500/10 border-l-4 border-amber-500">
-                  <td colSpan={3} className="p-3.5 font-bold uppercase text-navy-950 text-[11px] tracking-wide">
-                    Wearcast Grades
-                  </td>
-                </tr>
-                <tr className="hover:bg-paper-50 transition-colors">
-                  <td className="p-3.5 font-bold">Wearcast 600</td>
-                  <td className="p-3.5 text-navy-700 font-medium">Wearcast 600</td>
-                  <td className="p-3.5 text-navy-700/85">For abrasive and erosive wear applications in asphalt, cement, mining and steel industries.</td>
-                </tr>
-                <tr className="hover:bg-paper-50 transition-colors">
-                  <td className="p-3.5 font-bold">Wearcast Ultra 800</td>
-                  <td className="p-3.5 text-navy-700 font-medium">Wearcast Ultra 800</td>
-                  <td className="p-3.5 text-navy-700/85">For extreme abrasive and high erosive wear applications in asphalt, cement, mining and steel industries.</td>
-                </tr>
-                <tr className="hover:bg-paper-50 transition-colors">
-                  <td className="p-3.5 font-bold">Wearcast Max 1100</td>
-                  <td className="p-3.5 text-navy-700 font-medium">Wearcast Max 1100</td>
-                  <td className="p-3.5 text-navy-700/85">For extreme abrasive and high erosive wear applications with carbide lining for maximum performance in the asphalt and steel industries.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div className="mt-6 border-l-2 border-amber-400 bg-paper-50 p-5">
-            <h4 className="text-xs font-bold uppercase tracking-wide text-navy-950">
+          {/* Selection Guidance Card - Moved above the accordions */}
+          <div className="mt-8 group border border-line-200 border-l-2 border-l-amber-400 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-l-4 hover:border-l-amber-500 hover:shadow-md hover:shadow-amber-900/5">
+            <h4 className="font-display text-base font-extrabold uppercase tracking-wider text-amber-600">
               Selection Guidance
             </h4>
-            <p className="mt-1 text-xs leading-relaxed text-navy-700/80">
+            <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-navy-700/75">
               Choose by wear mode, impact severity, temperature, corrosion exposure and service life targets. WearGuard can custom-build the right solution for your application.
             </p>
+          </div>
+
+          <div className="mt-8 space-y-4">
+            {[
+              {
+                title: "WearGuard Designed & Cut to Shape Parts",
+                items: [
+                  { name: "WearGuard P400", hardness: "400 BHN", use: "Recommended for normal wear applications in asphalt, cement, mining and steel industries. Ideal for liners, chutes, buckets and similar components." },
+                  { name: "WearGuard P450", hardness: "450 BHN", use: "For high wear applications in asphalt, mining and steel industries. Suitable for heavy-duty components such as mixer liners." },
+                  { name: "WearGuard P500", hardness: "500 BHN", use: "For superior high wear applications in asphalt, cement, mining and steel industries. Ideal for mixer tips and wear edges." },
+                ]
+              },
+              {
+                title: "EnduraCast Z-Core Liners — tough specially abrasion resistant lined parts",
+                items: [
+                  { name: "EnduraCast Z-Core Liners", hardness: "58–62 HRC", use: "For extreme abrasive and erosive wear applications in asphalt, cement, mining and steel industries. Available in 6 to 24 mm tinsel." },
+                  { name: "EnduraCast Ultra Liners", hardness: "60–65 HRC", use: "Best for recycling needs. For extreme abrasive and high erosive wear applications in asphalt, cement, mining and steel industries. Available in 100% to 20 mm." },
+                  { name: "EnduraCast Z-Core Max Liners", hardness: "60–65 HRC", use: "Best for high-temperature recycling needs. For extreme abrasive and high erosive wear within the asphalt and steel industries. Available in 100% to 20 mm." },
+                ]
+              },
+              {
+                title: "Wearcast Grades",
+                items: [
+                  { name: "Wearcast 600", hardness: "Wearcast 600", use: "For abrasive and erosive wear applications in asphalt, cement, mining and steel industries." },
+                  { name: "Wearcast Ultra 800", hardness: "Wearcast Ultra 800", use: "For extreme abrasive and high erosive wear applications in asphalt, cement, mining and steel industries." },
+                  { name: "Wearcast Max 1100", hardness: "Wearcast Max 1100", use: "For extreme abrasive and high erosive wear applications with carbide lining for maximum performance in the asphalt and steel industries." },
+                ]
+              }
+            ].map((group, gIdx) => (
+              <details
+                key={gIdx}
+                className="group border border-line-200 border-l-4 border-l-amber-500 bg-paper-50 p-5 shadow-sm transition-all hover:bg-white hover:shadow-md [&[open]]:bg-white [&[open]]:shadow-md [&[open]]:border-amber-400"
+                open={gIdx === 0}
+              >
+                <summary className="flex cursor-pointer items-center justify-between font-display text-base font-bold uppercase tracking-wider text-navy-950 hover:text-amber-600">
+                  <span>{group.title}</span>
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-600 shadow-sm transition-all duration-300 group-hover:border-amber-500 group-hover:bg-amber-500 group-hover:text-navy-950 group-open:rotate-180 group-open:bg-amber-500 group-open:text-navy-950">
+                    <ChevronDown size={18} className="transition-transform duration-300" />
+                  </span>
+                </summary>
+                <div className="mt-4 overflow-x-auto pt-4 border-t border-line-100">
+                  <table className="w-full text-left text-sm text-navy-950 min-w-[580px]">
+                    <thead className="bg-navy-950 text-white font-bold uppercase tracking-wider text-[11px]">
+                      <tr>
+                        <th className="p-3 w-1/3">Product</th>
+                        <th className="p-3 w-1/4">Hardness / Grade</th>
+                        <th className="p-3">Recommended Use</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-line-100">
+                      {group.items.map((item, iIdx) => (
+                        <tr key={iIdx} className="hover:bg-paper-50 transition-colors">
+                          <td className="p-3 font-bold">{item.name}</td>
+                          <td className="p-3 text-navy-700 font-medium">{item.hardness}</td>
+                          <td className="p-3 text-navy-700/85 text-xs sm:text-sm leading-relaxed">{item.use}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            ))}
           </div>
         </div>
       </section>
 
       {/* SECTION 8: Earthmoving Bucket Tips */}
-      <section id="earthmoving-tips" className="scroll-mt-32 section-pad bg-paper-100 border-t border-line-200">
+      <section id="earthmoving-tips" className="scroll-mt-20 section-pad bg-paper-100 border-t border-line-200">
         <div className="container-xl">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 lg:items-center">
             <motion.div
@@ -662,13 +662,13 @@ export default function WearGuard() {
               transition={{ duration: 0.5 }}
               className="lg:order-1"
             >
-              <span className="mb-3 inline-block rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-bold uppercase tracking-widest text-amber-700">
-                Engineered penetration & wear protection
-              </span>
-              <h2 className="font-display text-3xl font-bold uppercase leading-[1.05] text-navy-950 sm:text-4xl">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
+                — Engineered penetration & wear protection
+              </p>
+              <h2 className="font-display text-3xl font-bold uppercase leading-[1.05] text-navy-950 sm:text-4xl lg:text-5xl">
                 Earthmoving <span className="text-amber-500">Bucket Tips</span>
               </h2>
-              <p className="mt-4 text-xs leading-relaxed text-navy-700/80 sm:text-sm">
+              <p className="mt-4 text-sm leading-relaxed text-navy-800 sm:text-sm">
                 WearGuard bucket tips are engineered to deliver dependable penetration, impact
                 resistance and long service life in harsh earthmoving conditions. Manufactured in high wear
                 resistant alloys and application-matched materials, they help reduce change-outs, protect
@@ -677,11 +677,11 @@ export default function WearGuard() {
                 shock and material flow demand more every day on tough working sites.
               </p>
 
-              <div className="mt-6 border-l-2 border-amber-400 bg-white p-5 shadow-sm">
-                <h4 className="text-xs font-bold uppercase tracking-wide text-navy-950">
+              <div className="mt-6 group border border-line-200 border-l-2 border-l-amber-400 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-l-4 hover:border-l-amber-500 hover:shadow-md hover:shadow-amber-900/5">
+                <h4 className="font-display text-base font-extrabold uppercase tracking-wider text-amber-600">
                   Custom-Engineered Tip Solutions
                 </h4>
-                <p className="mt-1.5 text-xs leading-relaxed text-navy-700/75">
+                <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-navy-700/75">
                   WearGuard can design and custom build bucket tips in profiles and wear materials matched to your machine, ground conditions and abrasive challenges, helping improve life, fitment and field performance.
                 </p>
               </div>
@@ -712,7 +712,7 @@ export default function WearGuard() {
         <div className="container-xl relative">
           <div className="relative overflow-hidden border border-line-200 bg-white p-8 shadow-md sm:p-12 lg:p-14">
             <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 via-amber-500 to-teal-500" />
-            
+
             <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
               {/* Left Column: Heading & Value Prop */}
               <div className="lg:col-span-7">
@@ -725,7 +725,7 @@ export default function WearGuard() {
                   <span className="text-amber-600">WearGuard partners with you</span>
                 </h2>
                 <p className="mt-4 max-w-xl text-base leading-relaxed text-navy-700/80">
-                  Stop overpaying OEM margins and struggling with premature component failure. 
+                  Stop overpaying OEM margins and struggling with premature component failure.
                   Get custom alloy engineering tailored specifically to your plant's abrasion profile.
                 </p>
 
@@ -765,7 +765,7 @@ export default function WearGuard() {
                       <CheckCircle2 size={18} className="text-amber-600 shrink-0" />
                       <h3 className="text-sm font-bold text-navy-950 uppercase tracking-wide">{item.title}</h3>
                     </div>
-                    <p className="text-xs leading-relaxed text-navy-700/80">{item.desc}</p>
+                    <p className="text-sm leading-relaxed text-navy-800">{item.desc}</p>
                   </motion.div>
                 ))}
               </div>

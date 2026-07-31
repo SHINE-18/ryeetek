@@ -138,7 +138,8 @@ export default function PhotoPlaceholder({ motif = "silos", image, className = "
         </svg>
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-navy-950/70 via-transparent to-transparent pointer-events-none" />
-      {label && (
+      {/* Only show placeholder label badge when using SVG fallback motif */}
+      {(!image || imgError) && label && (
         <span className="absolute bottom-3 left-3 rounded bg-navy-950/70 px-2 py-1 text-[10px] font-medium uppercase tracking-wider text-teal-300 pointer-events-none">
           {label}
         </span>

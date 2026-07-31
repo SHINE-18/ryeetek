@@ -1,14 +1,30 @@
 import { useEffect, useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, CheckCircle2, ChevronDown } from "lucide-react";
 import PhotoPlaceholder from "../components/PhotoPlaceholder";
 import SEO from "../components/SEO";
 import { capabilities } from "../data/capabilities";
 
+const HERO_SLIDES = [
+  { image: "/images/asphalt-plant.png", motif: "silos" },
+  { image: "/images/bitumen-tanks.png", motif: "tanks" },
+  { image: "/images/rotary-dryer.png", motif: "drum" },
+  { image: "/images/material-handling.png", motif: "conveyor" },
+  { image: "/images/scada-hmi.png", motif: "control" },
+];
+
 export default function Capabilities() {
   const { hash } = useLocation();
   const [selectedCap, setSelectedCap] = useState("");
+  const [heroSlide, setHeroSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     if (hash) {
@@ -29,6 +45,15 @@ export default function Capabilities() {
     }
   };
 
+  const handlePillClick = (e, id) => {
+    e.preventDefault();
+    setSelectedCap(id);
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
     <div>
       <SEO
@@ -36,8 +61,27 @@ export default function Capabilities() {
         description="Asphalt, concrete, bitumen storage, thermal, bulk material handling, processing, recycling, automation and engineering capabilities for Australian industrial projects."
         path="/capabilities"
       />
-      <section className="bg-navy-950 pt-32 pb-16 lg:pt-40 lg:pb-20">
-        <div className="container-xl">
+      <section className="relative overflow-hidden bg-navy-950 pt-32 pb-16 lg:pt-40 lg:pb-20">
+        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[36%] lg:block overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={heroSlide}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
+              className="absolute inset-0 h-full w-full"
+            >
+              <PhotoPlaceholder
+                motif={HERO_SLIDES[heroSlide].motif}
+                image={HERO_SLIDES[heroSlide].image}
+                className="h-full w-full object-cover"
+              />
+            </motion.div>
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/80 to-transparent z-10" />
+        </div>
+        <div className="container-xl relative">
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-teal-400">
             Capabilities
           </p>
@@ -68,21 +112,45 @@ export default function Capabilities() {
             </div>
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-2">
-            {capabilities.map((c) => (
-              <a
-                key={c.id}
-                href={`#${c.id}`}
-                onClick={() => setSelectedCap(c.id)}
-                className={`group inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-medium transition-all ${
-                  selectedCap === c.id
-                    ? "border-teal-400 bg-teal-500/20 text-teal-300"
-                    : "border-white/15 bg-white/5 text-white/70 hover:border-teal-400 hover:bg-teal-500/10 hover:text-teal-300"
-                }`}
-              >
-                {c.number} · {c.title} {c.accent}
-              </a>
-            ))}
+          {/* 3 Vertical Columns (4-4-2 Flow: Downward order, Max-W Adjusted) */}
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 max-w-3xl w-full">
+            {[
+              capabilities.slice(0, 4),
+              capabilities.slice(4, 8),
+              capabilities.slice(8, 10),
+            ].map((colList, colIdx) => {
+              const shortNames = {
+                "concrete-asphalt": "Concrete & Asphalt",
+                "bitumen-storage": "Bitumen Storage",
+                "process-systems": "Process Systems",
+                "thermal-systems": "Thermal Systems",
+                "material-handling": "Material Handling",
+                "material-processing": "Material Processing",
+                "recycling": "Recycling Systems",
+                "automation": "Automation & Controls",
+                "engineering-rd": "Engineering & R&D",
+                "machine-parts": "Machine Parts",
+              };
+              return (
+                <div key={colIdx} className="flex flex-col gap-2.5">
+                  {colList.map((c) => (
+                    <a
+                      key={c.id}
+                      href={`#${c.id}`}
+                      onClick={(e) => handlePillClick(e, c.id)}
+                      className={`inline-flex h-9 items-center justify-start rounded-full border pl-4 pr-3 text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all text-left ${
+                        selectedCap === c.id
+                          ? "border-teal-400 bg-teal-500/25 text-teal-300 shadow-md shadow-teal-500/20"
+                          : "border-white/20 bg-navy-900/90 text-white hover:border-teal-400 hover:bg-teal-500/20 hover:text-teal-300"
+                      }`}
+                    >
+                      <span className="w-6 shrink-0 text-teal-400 font-mono font-bold text-[11px]">{c.number}</span>
+                      <span className="truncate">{shortNames[c.id] || c.title}</span>
+                    </a>
+                  ))}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -129,11 +197,11 @@ export default function Capabilities() {
                         {cap.number} / Capabilities
                       </span>
                     </div>
-                    <h2 className="font-display text-3xl font-bold uppercase leading-[1.05] text-navy-950 sm:text-4xl">
+                    <h2 className="font-display text-3xl font-bold uppercase leading-[1.05] text-navy-950 sm:text-4xl lg:text-5xl">
                       {cap.title} <span className="text-teal-600">{cap.accent}</span>
                     </h2>
-                    <p className="mt-3 text-base font-semibold text-navy-900 leading-snug">{cap.summary}</p>
-                    <p className="mt-2.5 text-xs leading-relaxed text-navy-700/80">
+                    <p className="mt-3 text-base font-semibold text-navy-950 leading-snug">{cap.summary}</p>
+                    <p className="mt-2.5 text-sm leading-relaxed text-navy-800">
                       {cap.description}
                     </p>
                   </div>
@@ -150,15 +218,15 @@ export default function Capabilities() {
                             <div className="flex h-7 w-7 items-center justify-center rounded-md bg-teal-500/10 text-teal-600">
                               <GroupIcon size={16} strokeWidth={2} />
                             </div>
-                            <h3 className="text-xs font-bold uppercase tracking-wide">{group.title}</h3>
+                            <h3 className="text-sm font-bold uppercase tracking-wide">{group.title}</h3>
                           </div>
                           <ul className="grid gap-2.5 sm:grid-cols-1">
                             {group.items.map((item) => (
                               <li
                                 key={item}
-                                className="group/item flex items-start gap-2.5 text-xs text-navy-700/85 transition-colors hover:text-navy-950"
+                                className="group/item flex items-start gap-2.5 text-xs sm:text-sm text-navy-800 transition-colors hover:text-navy-950"
                               >
-                                <CheckCircle2 size={15} className="mt-0.5 shrink-0 text-teal-500 transition-transform group-hover/item:scale-110" />
+                                <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-teal-500 transition-transform group-hover/item:scale-110" />
                                 <span className="leading-relaxed">{item}</span>
                               </li>
                             ))}
@@ -185,7 +253,7 @@ export default function Capabilities() {
                     <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-400 to-teal-600 opacity-0 transition-opacity group-hover:opacity-100" />
 
                     <div className="mb-2">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-teal-600">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-teal-600">
                         Key Advantage
                       </span>
                     </div>
@@ -193,7 +261,7 @@ export default function Capabilities() {
                     <h4 className="text-sm font-bold text-navy-950 transition-colors group-hover:text-teal-600">
                       {h.title}
                     </h4>
-                    <p className="mt-1.5 text-xs leading-relaxed text-navy-700/70">{h.body}</p>
+                    <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-navy-700/80">{h.body}</p>
                   </motion.div>
                 ))}
               </div>
@@ -201,25 +269,33 @@ export default function Capabilities() {
               {/* FAQ Accordion Section */}
               {cap.faqs && cap.faqs.length > 0 && (
                 <div className="mt-8 border-t border-line-200 pt-6">
-                  <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-navy-950">
-                    Frequently Asked Questions
-                  </h4>
-                  <div className="space-y-3">
-                    {cap.faqs.map((faq, fIdx) => (
-                      <details
-                        key={fIdx}
-                        className="group border border-line-200 bg-white p-4 transition-all [&[open]]:border-teal-400 [&[open]]:shadow-sm"
-                      >
-                        <summary className="flex cursor-pointer items-center justify-between font-semibold text-xs text-navy-950 hover:text-teal-600">
-                          <span>{faq.q}</span>
-                          <span className="ml-2 text-teal-500 font-bold transition-transform group-open:rotate-180">↓</span>
-                        </summary>
-                        <p className="mt-2.5 text-xs leading-relaxed text-navy-700/80 pt-2 border-t border-line-100">
-                          {faq.a}
-                        </p>
-                      </details>
-                    ))}
-                  </div>
+                  <details className="group border border-line-200 bg-white p-4 shadow-sm transition-all [&[open]]:border-teal-400">
+                    <summary className="flex cursor-pointer items-center justify-between font-bold text-xs sm:text-sm uppercase tracking-wider text-navy-950 hover:text-teal-600">
+                      <span className="flex items-center gap-2">
+                        <span>Frequently Asked Questions</span>
+                        <span className="rounded-full bg-teal-500/10 px-2.5 py-0.5 text-[11px] text-teal-700 font-bold lowercase tracking-normal">
+                          {cap.faqs.length} questions
+                        </span>
+                      </span>
+                      <span className="text-teal-500 font-bold transition-transform group-open:rotate-180">↓</span>
+                    </summary>
+                    <div className="mt-4 space-y-3 pt-4 border-t border-line-100">
+                      {cap.faqs.map((faq, fIdx) => (
+                        <details
+                          key={fIdx}
+                          className="group/item border border-line-200 bg-paper-50 p-4 transition-all [&[open]]:border-teal-400 [&[open]]:bg-white"
+                        >
+                          <summary className="flex cursor-pointer items-center justify-between font-semibold text-xs sm:text-sm text-navy-950 hover:text-teal-600">
+                            <span>{faq.q}</span>
+                            <span className="ml-2 text-teal-500 font-bold transition-transform group-open/item:rotate-180">↓</span>
+                          </summary>
+                          <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-navy-700/80 pt-2 border-t border-line-100">
+                            {faq.a}
+                          </p>
+                        </details>
+                      ))}
+                    </div>
+                  </details>
                 </div>
               )}
             </div>

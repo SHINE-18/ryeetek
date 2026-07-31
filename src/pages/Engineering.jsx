@@ -134,29 +134,37 @@ export default function Engineering() {
 
           {/* FAQ Section */}
           <div className="mt-12 border-t border-line-200 pt-8">
-            <h3 className="mb-6 font-display text-xl font-bold uppercase text-navy-950">
-              Engineering & R&D FAQs
-            </h3>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <details className="group border border-line-200 bg-white p-5 transition-all [&[open]]:border-teal-400 [&[open]]:shadow-sm">
-                <summary className="flex cursor-pointer items-center justify-between font-bold text-xs uppercase tracking-wide text-navy-950 hover:text-teal-600">
-                  <span>Can Ryetek develop equipment for another OEM?</span>
-                  <span className="ml-2 text-teal-500 font-bold transition-transform group-open:rotate-180">↓</span>
-                </summary>
-                <p className="mt-3 text-xs leading-relaxed text-navy-700/80 pt-2.5 border-t border-line-100">
-                  Potentially. The commercial model, confidentiality, ownership of background and project IP, design responsibility and manufacturing support should be agreed at the start.
-                </p>
-              </details>
-              <details className="group border border-line-200 bg-white p-5 transition-all [&[open]]:border-teal-400 [&[open]]:shadow-sm">
-                <summary className="flex cursor-pointer items-center justify-between font-bold text-xs uppercase tracking-wide text-navy-950 hover:text-teal-600">
-                  <span>Do you provide only drawings?</span>
-                  <span className="ml-2 text-teal-500 font-bold transition-transform group-open:rotate-180">↓</span>
-                </summary>
-                <p className="mt-3 text-xs leading-relaxed text-navy-700/80 pt-2.5 border-t border-line-100">
-                  The recommended service begins with duty and concept definition. Drawing-only work can create risk when the process basis and interfaces have not been established.
-                </p>
-              </details>
-            </div>
+            <details className="group border border-line-200 bg-white p-6 shadow-sm transition-all [&[open]]:border-teal-400">
+              <summary className="flex cursor-pointer items-center justify-between font-display text-xl font-bold uppercase text-navy-950 hover:text-teal-600">
+                <span className="flex items-center gap-3">
+                  <span>Engineering FAQs</span>
+                  <span className="rounded-full bg-teal-500/10 px-3 py-1 text-xs text-teal-700 font-bold lowercase tracking-normal font-sans">
+                    2 questions
+                  </span>
+                </span>
+                <span className="text-teal-500 font-bold transition-transform group-open:rotate-180">↓</span>
+              </summary>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2 pt-5 border-t border-line-100">
+                <details className="group/item border border-line-200 bg-paper-50 p-5 transition-all [&[open]]:border-teal-400 [&[open]]:bg-white">
+                  <summary className="flex cursor-pointer items-center justify-between font-bold text-xs uppercase tracking-wide text-navy-950 hover:text-teal-600">
+                    <span>Can Ryetek develop equipment for another OEM?</span>
+                    <span className="ml-2 text-teal-500 font-bold transition-transform group-open/item:rotate-180">↓</span>
+                  </summary>
+                  <p className="mt-3 text-xs leading-relaxed text-navy-700/80 pt-2.5 border-t border-line-100">
+                    Potentially. The commercial model, confidentiality, ownership of background and project IP, design responsibility and manufacturing support should be agreed at the start.
+                  </p>
+                </details>
+                <details className="group/item border border-line-200 bg-paper-50 p-5 transition-all [&[open]]:border-teal-400 [&[open]]:bg-white">
+                  <summary className="flex cursor-pointer items-center justify-between font-bold text-xs uppercase tracking-wide text-navy-950 hover:text-teal-600">
+                    <span>Do you provide only drawings?</span>
+                    <span className="ml-2 text-teal-500 font-bold transition-transform group-open/item:rotate-180">↓</span>
+                  </summary>
+                  <p className="mt-3 text-xs leading-relaxed text-navy-700/80 pt-2.5 border-t border-line-100">
+                    The recommended service begins with duty and concept definition. Drawing-only work can create risk when the process basis and interfaces have not been established.
+                  </p>
+                </details>
+              </div>
+            </details>
           </div>
 
           {/* Bottom Integrated CTA Card */}
