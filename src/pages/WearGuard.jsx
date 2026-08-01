@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -13,6 +14,11 @@ import {
   Layers,
   Sparkles,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Layers3,
+  Cog,
+  RotateCw,
 } from "lucide-react";
 import PhotoPlaceholder from "../components/PhotoPlaceholder";
 import SectionHeading from "../components/SectionHeading";
@@ -48,7 +54,7 @@ const PRODUCT_LINES = [
   {
     id: "rotary-dryers",
     name: "Dryer Drum Wear Components",
-    badge: "Asphalt & Aggregate Dryers",
+    badge: "Dryer Range",
     body: "Sprockets and trunnion wheels, drum internals and discharge flights, thrust and trunnion wheels for any brand, any era. Heavy-duty trunnion wheels and rollers, dryer rings, girth gears and machined components, heat-treated to meet rigorous performance requirements.",
     items: ["Trunnion wheels & rollers", "Internal flighting & veeing flights", "Thrust roller assemblies", "Girth gear & pinion sets", "Seal rings & housing components"],
     image: "/images/rotary-dryer.png",
@@ -57,24 +63,272 @@ const PRODUCT_LINES = [
   {
     id: "mixers",
     name: "Pugmill & Mixer Wear Parts",
-    badge: "Continuous & Batch Mixers",
+    badge: "Mixer Range",
     body: "Premium mixer components engineered for maximum wear life including mixer liners, paddles, tips and other critical wear parts in Ni-Hard or high-chrome premium castings, with smart arm-protection covers to shield softer cast mixer arms from direct abrasion.",
     items: ["Mixer tips, paddles & arms", "Ni-Hard & high-chrome liner plates", "Arm protection guards & covers", "Discharge door seals & liners", "Shaft sleeve protectors"],
-    image: "/images/wearguard-parts.png",
+    image: "/images/materials/premium-castings.png",
     motif: "gears",
   },
   {
     id: "custom",
     name: "Reverse-Engineered & Custom Wear Components",
-    badge: "Obsolescence & Specialty Parts",
+    badge: "Custom Range",
     body: "We reverse-engineer (design to prototype) even low-volume parts for freedom from paying premium for OEM monopolies. Every part is custom designed to outlast the original, not just match its dimensions.",
     items: ["3D laser scanning & reverse engineering", "Alloy selection for specific abrasive duties", "Pattern making & trial castings", "Small-run & prototype production", "Hardness & metallurgy reporting"],
-    image: "/images/contact_engineering_hq_1785489060344.png",
+    image: "/images/materials/sacrificial-inserts.png",
     motif: "parts",
   },
 ];
 
+// ── DRYER COMPONENTS SLIDESHOW DATA ──────────────────────────────────────────
+const DRYER_SLIDES = [
+  {
+    id: "dryer-combo",
+    title: "Dryer Components Suite",
+    subtitle: "Complete Dryer Drives, Trunnions & Internals",
+    image: "/images/materials/dryer-combo.png",
+    tag: "4K Studio Overview",
+  },
+  {
+    id: "rotary-dryer",
+    title: "Rotary Dryer Drum System",
+    subtitle: "High-Efficiency Drying & Thermal Transfer",
+    image: "/images/rotary-dryer.png",
+    tag: "Complete Drum System",
+  },
+  {
+    id: "drum-flights",
+    title: "Drum Internals & CFD Flights",
+    subtitle: "Internal Lifter Flights & Veeing Flighting",
+    image: "/images/wearguard-callout.png",
+    tag: "8K Flighting System",
+  },
+  {
+    id: "trunnion-wheels",
+    title: "Thrust & Trunnion Wear Liners",
+    subtitle: "Machined Cylindrical Rollers & Bearing Blocks",
+    image: "/images/wearguard-parts.png",
+    tag: "Machined Castings",
+  },
+];
+
+// ── FILTER COMPONENTS SLIDESHOW DATA ─────────────────────────────────────────
+const FILTER_SLIDES = [
+  {
+    id: "filter-combo",
+    title: "Filter Component Suite",
+    subtitle: "Complete Baghouse Filtration System",
+    image: "/images/materials/filter-combo.png",
+    tag: "High-Efficiency System",
+  },
+  {
+    id: "filter-bags",
+    title: "Nomex® & Meta-Aramid Bags",
+    subtitle: "400–650 gsm High-Temp Filtration",
+    image: "/images/materials/filter-bags.png",
+    tag: "High-Temp Resistance",
+  },
+  {
+    id: "filter-cages",
+    title: "Stainless Steel Filter Cages",
+    subtitle: "Heavy-Duty Wire Cages & Venturis",
+    image: "/images/materials/filter-cages.png",
+    tag: "Corrosion Resistant",
+  },
+  {
+    id: "exhaust-fan",
+    title: "Exhaust Fan & Blower Impeller",
+    subtitle: "Wear-Lined Scroll Housing & Wheels",
+    image: "/images/materials/exhaust-fan.png",
+    tag: "High-Extraction Fan",
+  },
+];
+
+// ── BUCKET ELEVATOR COMPONENTS SLIDESHOW DATA ────────────────────────────────
+const ELEVATOR_SLIDES = [
+  {
+    id: "elevator-combo",
+    title: "Elevator & Conveyor Suite",
+    subtitle: "Complete Drive Sprockets, Drag Chains & Buckets",
+    image: "/images/materials/elevator-combo.png",
+    tag: "System Overview",
+  },
+  {
+    id: "elevator-buckets",
+    title: "Deep Steel Elevator Buckets",
+    subtitle: "Reinforced Wear Lips & High-Tensile Chain Mounts",
+    image: "/images/materials/elevator-buckets.png",
+    tag: "Elevator Elements",
+  },
+  {
+    id: "drive-sprockets",
+    title: "Drive Sprockets & Traction Wheels",
+    subtitle: "Segmented Bolt-On Teeth & Hardened Rim Wheels",
+    image: "/images/materials/drive-sprockets.png",
+    tag: "Drive Components",
+  },
+  {
+    id: "material-handling",
+    title: "Bucket Elevator Plant System",
+    subtitle: "Heavy-Duty Bulk Handling & Conveying Towers",
+    image: "/images/material-handling.png",
+    tag: "High-Capacity Elevators",
+  },
+];
+
+// ── MIXER COMPONENTS SLIDESHOW DATA ──────────────────────────────────────────
+const MIXER_SLIDES = [
+  {
+    id: "mixer-paddle-arms",
+    title: "Mixer Paddle Arms",
+    subtitle: "Ni-Hard & High-Chrome Cast Arms",
+    image: "/images/materials/mixer-paddle-arms.png",
+    tag: "High-Impact Castings",
+  },
+  {
+    id: "arm-protection",
+    title: "Smart Arm-Protection Covers",
+    subtitle: "Replaceable Split-Half Shield Guards",
+    image: "/images/materials/arm-protection.png",
+    tag: "Shaft Protection",
+  },
+  {
+    id: "premium-castings",
+    title: "High-Chrome Mixer Tips",
+    subtitle: "Wearcast 600 / Ultra 800 Alloy Tips",
+    image: "/images/materials/premium-castings.png",
+    tag: "600–800 HBW Hardness",
+  },
+  {
+    id: "sacrificial-inserts",
+    title: "Mixer Wear Blocks & Liners",
+    subtitle: "Replaceable Sacrificial Wear Liners",
+    image: "/images/materials/sacrificial-inserts.png",
+    tag: "Quick Replacement",
+  },
+];
+
+// ── MATERIAL SLIDESHOW ITEMS (Clean Studio Product Photos Only) ──────────────
+const MATERIAL_SLIDES = [
+  {
+    id: "wear-steel",
+    title: "Wear Steel",
+    subtitle: "400–500 BHN Quenched & Tempered",
+    image: "/images/materials/wear-steel.png",
+    tag: "Abrasion Resistant",
+    desc: "High-strength alloy steel plate (WearGuard P400/P450/P500). Delivers exceptional structural strength and sliding abrasion resistance.",
+  },
+  {
+    id: "hardfaced-plate",
+    title: "Hardfaced Plate",
+    subtitle: "58–65 HRC Chromium-Carbide Overlay",
+    image: "/images/materials/hardfaced-plate.png",
+    tag: "Extreme Erosion",
+    desc: "EnduraCast Z-Core hardfaced plates with dense chromium-carbide weld overlay matrix for severe scraping and fine particle velocity erosion.",
+  },
+  {
+    id: "premium-castings",
+    title: "Premium Castings",
+    subtitle: "600–800 HBW / 62 HRC Alloy",
+    image: "/images/materials/premium-castings.png",
+    tag: "High-Chrome Castings",
+    desc: "Precision-cast Wearcast 600 / Ultra 800 mixer paddle arms, tips, liners, and arm protection guards.",
+  },
+  {
+    id: "ceramic-liners",
+    title: "Ceramic Liners",
+    subtitle: "92–95% Alumina Hexagonal Tiles",
+    image: "/images/materials/ceramic-liners.png",
+    tag: "9 Mohs Scale",
+    desc: "High-density alumina ceramic tile matrix bonded to heavy steel backing. Impervious to fine sand, slurry, and pneumatic wear.",
+  },
+  {
+    id: "rubber-ceramic",
+    title: "Rubber-Ceramic",
+    subtitle: "Shock-Absorbing Matrix Panel",
+    image: "/images/materials/rubber-ceramic.png",
+    tag: "Impact + Abrasion",
+    desc: "Alumina ceramic blocks embedded in energy-absorbing elastomeric rubber. Absorbs heavy rock impact while ceramic face resists sliding abrasion.",
+  },
+  {
+    id: "polymer-liners",
+    title: "Polymer Liners",
+    subtitle: "UHMW-PE & Polyurethane",
+    image: "/images/materials/polymer-liners.png",
+    tag: "Zero Material Sticking",
+    desc: "Ultra-High Molecular Weight Polyethylene liners providing ultra-low friction to eliminate material sticking and rat-holing.",
+  },
+  {
+    id: "sacrificial-inserts",
+    title: "Sacrificial Inserts",
+    subtitle: "Replaceable Wear Bars & Blocks",
+    image: "/images/materials/sacrificial-inserts.png",
+    tag: "Quick 15-Min Swap",
+    desc: "Bolt-in and weld-on sacrificial wear bars and runner strips designed to protect structural frames and simplify maintenance.",
+  },
+];
+
 export default function WearGuard() {
+  const [slideIdx, setSlideIdx] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const [dryerSlideIdx, setDryerSlideIdx] = useState(0);
+  const [isDryerPaused, setIsDryerPaused] = useState(false);
+
+  const [filterSlideIdx, setFilterSlideIdx] = useState(0);
+  const [isFilterPaused, setIsFilterPaused] = useState(false);
+
+  const [elevatorSlideIdx, setElevatorSlideIdx] = useState(0);
+  const [isElevatorPaused, setIsElevatorPaused] = useState(false);
+
+  const [mixerSlideIdx, setMixerSlideIdx] = useState(0);
+  const [isMixerPaused, setIsMixerPaused] = useState(false);
+
+  // Auto-play Material Technologies slideshow
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setSlideIdx((prev) => (prev + 1) % MATERIAL_SLIDES.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  // Auto-play Dryer Components slideshow
+  useEffect(() => {
+    if (isDryerPaused) return;
+    const timer = setInterval(() => {
+      setDryerSlideIdx((prev) => (prev + 1) % DRYER_SLIDES.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [isDryerPaused]);
+
+  // Auto-play Filter Components slideshow
+  useEffect(() => {
+    if (isFilterPaused) return;
+    const timer = setInterval(() => {
+      setFilterSlideIdx((prev) => (prev + 1) % FILTER_SLIDES.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [isFilterPaused]);
+
+  // Auto-play Elevator Components slideshow
+  useEffect(() => {
+    if (isElevatorPaused) return;
+    const timer = setInterval(() => {
+      setElevatorSlideIdx((prev) => (prev + 1) % ELEVATOR_SLIDES.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [isElevatorPaused]);
+
+  // Auto-play Mixer Components slideshow
+  useEffect(() => {
+    if (isMixerPaused) return;
+    const timer = setInterval(() => {
+      setMixerSlideIdx((prev) => (prev + 1) % MIXER_SLIDES.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [isMixerPaused]);
+
   return (
     <div>
       <SEO
@@ -86,8 +340,8 @@ export default function WearGuard() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-navy-950 pt-32 pb-20 lg:pt-40 lg:pb-24">
         <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[42%] lg:block">
-          <PhotoPlaceholder motif="drum" image="/images/wearguard-callout.png" className="h-full w-full" label="Product photography" />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/50 to-transparent" />
+          <PhotoPlaceholder motif="drum" image="/images/wearguard-callout.png" className="h-full w-full object-cover opacity-70" label="Product photography" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/70 to-transparent" />
         </div>
         <div className="container-xl relative">
           <div className="max-w-2xl">
@@ -102,7 +356,7 @@ export default function WearGuard() {
             </p>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-white/70">
               End wear nightmares with custom-engineered wear parts, tailored alloys,
-              small-batch flexibility and fast global delivery — for dryer drums, mixers and
+              small-batch flexibility and fast global delivery — for dryer drums, mixers, filters and
               any process equipment across construction, concrete and asphalt industries.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
@@ -120,7 +374,6 @@ export default function WearGuard() {
           </div>
         </div>
       </section>
-
 
       {/* Benefits */}
       <section className="section-pad bg-white">
@@ -143,9 +396,7 @@ export default function WearGuard() {
                   transition={{ duration: 0.4, delay: i * 0.08 }}
                   className="group relative overflow-hidden border border-line-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-amber-400 hover:shadow-md hover:shadow-amber-900/5"
                 >
-                  {/* Top gradient highlight bar */}
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-amber-500 opacity-0 transition-opacity group-hover:opacity-100" />
-
                   <Icon className="text-amber-500" size={26} strokeWidth={1.7} />
                   <h3 className="mt-4 text-sm font-semibold text-navy-950">{b.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-navy-800">{b.body}</p>
@@ -195,10 +446,12 @@ export default function WearGuard() {
         </div>
       </section>
 
-      {/* SECTION 1: Dryer Drum Components & Retrofits */}
+      {/* SECTION 1: Dryer Drum Components & Retrofits with Studio Slideshow & Marquee Pills */}
       <section id="dryer-drums" className="scroll-mt-20 section-pad bg-white">
         <div className="container-xl">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 lg:items-center">
+            
+            {/* Dryer Slideshow Container (Left Side) */}
             <motion.div
               initial={{ opacity: 0, x: -24 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -206,16 +459,61 @@ export default function WearGuard() {
               transition={{ duration: 0.5 }}
               className="flex items-center"
             >
-              <div className="relative w-full overflow-hidden rounded-lg border border-line-200 bg-white shadow-md">
-                <PhotoPlaceholder
-                  motif="drum"
-                  image="/images/rotary-dryer.png"
-                  className="aspect-[4/3] w-full object-cover"
-                  label="Dryer Drum Engineering"
-                />
+              <div
+                onMouseEnter={() => setIsDryerPaused(true)}
+                onMouseLeave={() => setIsDryerPaused(false)}
+                className="relative w-full overflow-hidden rounded-lg border border-line-200 bg-white shadow-md aspect-[4/3] group transition-all duration-500 hover:border-amber-400 hover:shadow-xl hover:shadow-amber-500/15 cursor-pointer"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={dryerSlideIdx}
+                    initial={{ opacity: 0, scale: 1.02 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.5 }}
+                    className="relative w-full h-full"
+                  >
+                    <img
+                      src={DRYER_SLIDES[dryerSlideIdx].image}
+                      alt={DRYER_SLIDES[dryerSlideIdx].title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent pointer-events-none" />
+
+                    {/* Active Dryer Slide Info Overlay */}
+                    <div className="absolute bottom-4 left-4 right-4 text-white flex items-end justify-between z-10 pointer-events-none">
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400 bg-navy-950/80 px-2 py-0.5 rounded border border-amber-400/30">
+                          {DRYER_SLIDES[dryerSlideIdx].tag}
+                        </span>
+                        <h4 className="font-display text-lg font-bold uppercase mt-1 text-white">
+                          {DRYER_SLIDES[dryerSlideIdx].title}
+                        </h4>
+                        <p className="text-xs text-white/75 font-mono">
+                          {DRYER_SLIDES[dryerSlideIdx].subtitle}
+                        </p>
+                      </div>
+
+                      {/* Manual Slide Dots */}
+                      <div className="flex items-center gap-1.5 pointer-events-auto">
+                        {DRYER_SLIDES.map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setDryerSlideIdx(i)}
+                            className={`h-2 rounded-full transition-all ${
+                              dryerSlideIdx === i ? "w-6 bg-amber-400" : "w-2 bg-white/40 hover:bg-white"
+                            }`}
+                            aria-label={`Go to slide ${i + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </motion.div>
 
+            {/* Right Side Content */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -223,7 +521,7 @@ export default function WearGuard() {
               transition={{ duration: 0.5 }}
             >
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
-                — Any brand. Any era.
+                — Any brand. Any era. No excuses.
               </p>
               <h2 className="font-display text-3xl font-bold uppercase leading-[1.05] text-navy-950 sm:text-4xl lg:text-5xl">
                 Dryer Drum Components <span className="text-amber-500">& Retrofits</span>
@@ -274,10 +572,42 @@ export default function WearGuard() {
               </motion.div>
             ))}
           </div>
+
+          {/* Running Marquee Pills for Dryer Components */}
+          <div className="mt-12 overflow-hidden relative w-full">
+            <motion.div
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+              className="flex w-max gap-3 py-1"
+            >
+              {[
+                "Trunnion Wheels & Rollers",
+                "CFD Lifter Flights",
+                "Girth Gears & Pinions",
+                "Thrust Roller Assemblies",
+                "Discharge Flights",
+                "Seal Rings & Bearings",
+                "Trunnion Wheels & Rollers",
+                "CFD Lifter Flights",
+                "Girth Gears & Pinions",
+                "Thrust Roller Assemblies",
+                "Discharge Flights",
+                "Seal Rings & Bearings",
+              ].map((tag, idx) => (
+                <span
+                  key={idx}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-navy-950/15 bg-paper-50 px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-navy-950 shadow-sm whitespace-nowrap"
+                >
+                  <RotateCw size={13} className="text-amber-500 shrink-0" />
+                  {tag}
+                </span>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* SECTION 2: Filter Components */}
+      {/* SECTION 2: Filter Components with Studio Slideshow & Running Marquee Pills */}
       <section id="filter-components" className="scroll-mt-20 section-pad bg-paper-100 border-t border-line-200">
         <div className="container-xl">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 lg:items-center">
@@ -311,6 +641,7 @@ export default function WearGuard() {
               </div>
             </motion.div>
 
+            {/* Filter Components Slideshow Container */}
             <motion.div
               initial={{ opacity: 0, x: 24 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -318,28 +649,189 @@ export default function WearGuard() {
               transition={{ duration: 0.5 }}
               className="flex items-center lg:order-2"
             >
-              <div className="relative w-full overflow-hidden rounded-lg border border-line-200 bg-white shadow-md">
-                <PhotoPlaceholder
-                  motif="filter"
-                  image="/images/process-systems.png"
-                  className="aspect-[4/3] w-full object-cover"
-                  label="Baghouse Filter Systems"
-                />
+              <div
+                onMouseEnter={() => setIsFilterPaused(true)}
+                onMouseLeave={() => setIsFilterPaused(false)}
+                className="relative w-full overflow-hidden rounded-lg border border-line-200 bg-white shadow-md aspect-[4/3] group transition-all duration-500 hover:border-amber-400 hover:shadow-xl hover:shadow-amber-500/15 cursor-pointer"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={filterSlideIdx}
+                    initial={{ opacity: 0, scale: 1.02 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.5 }}
+                    className="relative w-full h-full"
+                  >
+                    <img
+                      src={FILTER_SLIDES[filterSlideIdx].image}
+                      alt={FILTER_SLIDES[filterSlideIdx].title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent pointer-events-none" />
+
+                    {/* Active Filter Slide Info Overlay */}
+                    <div className="absolute bottom-4 left-4 right-4 text-white flex items-end justify-between z-10 pointer-events-none">
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400 bg-navy-950/80 px-2 py-0.5 rounded border border-amber-400/30">
+                          {FILTER_SLIDES[filterSlideIdx].tag}
+                        </span>
+                        <h4 className="font-display text-lg font-bold uppercase mt-1 text-white">
+                          {FILTER_SLIDES[filterSlideIdx].title}
+                        </h4>
+                        <p className="text-xs text-white/75 font-mono">
+                          {FILTER_SLIDES[filterSlideIdx].subtitle}
+                        </p>
+                      </div>
+
+                      {/* Manual Slide Dots */}
+                      <div className="flex items-center gap-1.5 pointer-events-auto">
+                        {FILTER_SLIDES.map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setFilterSlideIdx(i)}
+                            className={`h-2 rounded-full transition-all ${
+                              filterSlideIdx === i ? "w-6 bg-amber-400" : "w-2 bg-white/40 hover:bg-white"
+                            }`}
+                            aria-label={`Go to slide ${i + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               </div>
+            </motion.div>
+          </div>
+
+          {/* Running Marquee Pills for Filter Components */}
+          <div className="mt-12 overflow-hidden relative w-full">
+            <motion.div
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+              className="flex w-max gap-3 py-1"
+            >
+              {[
+                "Nomex® Filter Bags",
+                "Stainless Steel Cages",
+                "Exhaust Fan Impellers",
+                "Meta-Aramid Bags",
+                "Blower Scroll Housings",
+                "Plenum Plates & Snap Rings",
+                "Nomex® Filter Bags",
+                "Stainless Steel Cages",
+                "Exhaust Fan Impellers",
+                "Meta-Aramid Bags",
+                "Blower Scroll Housings",
+                "Plenum Plates & Snap Rings",
+              ].map((tag, idx) => (
+                <span
+                  key={idx}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-navy-950/15 bg-white px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-navy-950 shadow-sm whitespace-nowrap"
+                >
+                  <Filter size={13} className="text-amber-500 shrink-0" />
+                  {tag}
+                </span>
+              ))}
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 3: Mixer Components & Shafts */}
+      {/* SECTION 3: Mixer Components & Shafts with Studio Slideshow & Running Marquee Pills */}
       <section id="mixer-shafts" className="scroll-mt-20 section-pad bg-white border-t border-line-200">
         <div className="container-xl">
-          <SectionHeading
-            kicker="Engineered to outlast the mix"
-            title="Mixer Shafts &"
-            accent="Arm Protection"
-            description="Upgrade your mixer shafts to high performance and low maintenance with WearGuard's fully covered shaft design with High-chrome castings built for extreme abrasion resistance and long service life."
-          />
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 lg:items-center">
+            
+            {/* Mixer Slideshow Container (Left Side) */}
+            <motion.div
+              initial={{ opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center"
+            >
+              <div
+                onMouseEnter={() => setIsMixerPaused(true)}
+                onMouseLeave={() => setIsMixerPaused(false)}
+                className="relative w-full overflow-hidden rounded-lg border border-line-200 bg-white shadow-md aspect-[4/3] group transition-all duration-500 hover:border-amber-400 hover:shadow-xl hover:shadow-amber-500/15 cursor-pointer"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={mixerSlideIdx}
+                    initial={{ opacity: 0, scale: 1.02 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.5 }}
+                    className="relative w-full h-full"
+                  >
+                    <img
+                      src={MIXER_SLIDES[mixerSlideIdx].image}
+                      alt={MIXER_SLIDES[mixerSlideIdx].title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent pointer-events-none" />
+
+                    {/* Active Mixer Slide Info Overlay */}
+                    <div className="absolute bottom-4 left-4 right-4 text-white flex items-end justify-between z-10 pointer-events-none">
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400 bg-navy-950/80 px-2 py-0.5 rounded border border-amber-400/30">
+                          {MIXER_SLIDES[mixerSlideIdx].tag}
+                        </span>
+                        <h4 className="font-display text-lg font-bold uppercase mt-1 text-white">
+                          {MIXER_SLIDES[mixerSlideIdx].title}
+                        </h4>
+                        <p className="text-xs text-white/75 font-mono">
+                          {MIXER_SLIDES[mixerSlideIdx].subtitle}
+                        </p>
+                      </div>
+
+                      {/* Manual Slide Dots */}
+                      <div className="flex items-center gap-1.5 pointer-events-auto">
+                        {MIXER_SLIDES.map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setMixerSlideIdx(i)}
+                            className={`h-2 rounded-full transition-all ${
+                              mixerSlideIdx === i ? "w-6 bg-amber-400" : "w-2 bg-white/40 hover:bg-white"
+                            }`}
+                            aria-label={`Go to slide ${i + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </motion.div>
+
+            {/* Right Side Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
+                — Any brand. Any era. No excuses.
+              </p>
+              <h2 className="font-display text-3xl font-bold uppercase leading-[1.05] text-navy-950 sm:text-4xl lg:text-5xl">
+                Mixer Components <span className="text-amber-500">& Shafts</span>
+              </h2>
+              <p className="mt-4 text-sm leading-relaxed text-navy-800 sm:text-sm">
+                Upgrade your mixer shafts to high performance and low maintenance with WearGuard's fully covered shaft design with High-chrome castings built for extreme abrasion resistance and long service life.
+              </p>
+
+              <div className="mt-6 group border border-line-200 border-l-2 border-l-amber-400 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-l-4 hover:border-l-amber-500 hover:shadow-md hover:shadow-amber-900/5">
+                <h4 className="font-display text-base font-extrabold uppercase tracking-wider text-amber-600">
+                  Smart Arm-Protection Covers
+                </h4>
+                <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-navy-700/75">
+                  WearGuard supplies premium mixer components engineered for maximum wear life. Smart arm-protection covers shield softer cast mixer arms from direct abrasion, extending component life and reducing replacement frequency.
+                </p>
+              </div>
+            </motion.div>
+          </div>
 
           <div className="mt-10 grid gap-5 sm:grid-cols-3">
             {[
@@ -370,7 +862,39 @@ export default function WearGuard() {
             ))}
           </div>
 
-          {/* Existing Product lines grid */}
+          {/* Running Marquee Pills for Mixer Components */}
+          <div className="mt-12 overflow-hidden relative w-full">
+            <motion.div
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+              className="flex w-max gap-3 py-1"
+            >
+              {[
+                "Mixer Paddle Arms",
+                "Arm Protection Covers",
+                "Ni-Hard Liner Plates",
+                "High-Chrome Tips",
+                "Mixer Shaft Sleeves",
+                "Discharge Door Liners",
+                "Mixer Paddle Arms",
+                "Arm Protection Covers",
+                "Ni-Hard Liner Plates",
+                "High-Chrome Tips",
+                "Mixer Shaft Sleeves",
+                "Discharge Door Liners",
+              ].map((tag, idx) => (
+                <span
+                  key={idx}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-navy-950/15 bg-paper-50 px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-navy-950 shadow-sm whitespace-nowrap"
+                >
+                  <Cog size={13} className="text-amber-500 shrink-0" />
+                  {tag}
+                </span>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Core Product lines grid */}
           <div className="mt-14 pt-10 border-t border-line-200">
             <h3 className="mb-6 font-display text-xl font-bold uppercase text-navy-950">
               Core WearGuard Product Lines
@@ -385,10 +909,9 @@ export default function WearGuard() {
                   transition={{ duration: 0.45, delay: i * 0.1 }}
                   className="group relative overflow-hidden border border-line-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:border-amber-400 hover:shadow-md hover:shadow-amber-900/5"
                 >
-                  {/* Top gradient highlight bar */}
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-amber-500 opacity-0 transition-opacity group-hover:opacity-100" />
                   
-                  <PhotoPlaceholder motif={p.motif} image={p.image} className="aspect-[16/10] w-full" label={p.badge} />
+                  <PhotoPlaceholder motif={p.motif} image={p.image} className="aspect-[16/10] w-full object-cover" label={p.badge} />
                   <div className="p-6">
                     <h4 className="font-display text-base font-bold uppercase text-navy-950">
                       {p.name}
@@ -410,10 +933,12 @@ export default function WearGuard() {
         </div>
       </section>
 
-      {/* SECTION 4: Bucket Elevators & Drag Conveyors */}
+      {/* SECTION 4: Bucket Elevators & Drag Conveyors with Studio Slideshow & Running Marquee Pills */}
       <section id="elevators-conveyors" className="scroll-mt-20 section-pad bg-paper-100 border-t border-line-200">
         <div className="container-xl">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 lg:items-center">
+            
+            {/* Elevator Slideshow Container (Left Side) */}
             <motion.div
               initial={{ opacity: 0, x: -24 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -421,16 +946,61 @@ export default function WearGuard() {
               transition={{ duration: 0.5 }}
               className="flex items-center"
             >
-              <div className="relative w-full overflow-hidden rounded-lg border border-line-200 bg-white shadow-md">
-                <PhotoPlaceholder
-                  motif="elevator"
-                  image="/images/material-handling.png"
-                  className="aspect-[4/3] w-full object-cover"
-                  label="Elevator & Conveyor Components"
-                />
+              <div
+                onMouseEnter={() => setIsElevatorPaused(true)}
+                onMouseLeave={() => setIsElevatorPaused(false)}
+                className="relative w-full overflow-hidden rounded-lg border border-line-200 bg-white shadow-md aspect-[4/3] group transition-all duration-500 hover:border-amber-400 hover:shadow-xl hover:shadow-amber-500/15 cursor-pointer"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={elevatorSlideIdx}
+                    initial={{ opacity: 0, scale: 1.02 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.5 }}
+                    className="relative w-full h-full"
+                  >
+                    <img
+                      src={ELEVATOR_SLIDES[elevatorSlideIdx].image}
+                      alt={ELEVATOR_SLIDES[elevatorSlideIdx].title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent pointer-events-none" />
+
+                    {/* Active Elevator Slide Info Overlay */}
+                    <div className="absolute bottom-4 left-4 right-4 text-white flex items-end justify-between z-10 pointer-events-none">
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400 bg-navy-950/80 px-2 py-0.5 rounded border border-amber-400/30">
+                          {ELEVATOR_SLIDES[elevatorSlideIdx].tag}
+                        </span>
+                        <h4 className="font-display text-lg font-bold uppercase mt-1 text-white">
+                          {ELEVATOR_SLIDES[elevatorSlideIdx].title}
+                        </h4>
+                        <p className="text-xs text-white/75 font-mono">
+                          {ELEVATOR_SLIDES[elevatorSlideIdx].subtitle}
+                        </p>
+                      </div>
+
+                      {/* Manual Slide Dots */}
+                      <div className="flex items-center gap-1.5 pointer-events-auto">
+                        {ELEVATOR_SLIDES.map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setElevatorSlideIdx(i)}
+                            className={`h-2 rounded-full transition-all ${
+                              elevatorSlideIdx === i ? "w-6 bg-amber-400" : "w-2 bg-white/40 hover:bg-white"
+                            }`}
+                            aria-label={`Go to slide ${i + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </motion.div>
 
+            {/* Right Side Content */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -438,7 +1008,7 @@ export default function WearGuard() {
               transition={{ duration: 0.5 }}
             >
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
-                — Elevating, conveying & loading
+                — Long-life components for elevating, conveying & loading
               </p>
               <h2 className="font-display text-3xl font-bold uppercase leading-[1.05] text-navy-950 sm:text-4xl lg:text-5xl">
                 Bucket Elevators & <span className="text-amber-500">Drag Conveyors</span>
@@ -462,21 +1032,91 @@ export default function WearGuard() {
               </div>
             </motion.div>
           </div>
+
+          {/* Running Marquee Pills for Elevator Components */}
+          <div className="mt-12 overflow-hidden relative w-full">
+            <motion.div
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+              className="flex w-max gap-3 py-1"
+            >
+              {[
+                "Elevator Buckets",
+                "Drive Sprockets",
+                "Traction Wheels",
+                "Forged Drag Chains",
+                "Conveyor Skirt Liners",
+                "Impact Flights",
+                "Elevator Buckets",
+                "Drive Sprockets",
+                "Traction Wheels",
+                "Forged Drag Chains",
+                "Conveyor Skirt Liners",
+                "Impact Flights",
+              ].map((tag, idx) => (
+                <span
+                  key={idx}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-navy-950/15 bg-white px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-navy-950 shadow-sm whitespace-nowrap"
+                >
+                  <Layers3 size={13} className="text-amber-500 shrink-0" />
+                  {tag}
+                </span>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* SECTION 5: Flow & Wear Liners */}
       <section id="wear-liners" className="scroll-mt-20 section-pad bg-white border-t border-line-200">
         <div className="container-xl">
-          <SectionHeading
-            kicker="Engineered wear protection for every critical transfer zone"
-            title="Control the Flow."
-            accent="Outlast the Impact."
-            description="WearGuard protects the high-impact zones where bulk materials change direction, accelerate and strike equipment surfaces. Our engineered chute, hopper and transfer-point solutions include liners, skirt systems, impact plates, rock-box components and bolt-in wear assemblies. Each system is tailored to material size, velocity, moisture and abrasion severity, helping reduce structural damage, simplify replacement, extend service intervals and keep critical material-handling points operating with fewer interruptions, greater reliability and lower maintenance costs."
-          />
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 lg:items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
+                — Engineered wear protection for every critical transfer zone
+              </p>
+              <h2 className="font-display text-3xl font-bold uppercase leading-[1.05] text-navy-950 sm:text-4xl lg:text-5xl">
+                Control the Flow. <span className="text-amber-500">Outlast the Impact.</span>
+              </h2>
+              <p className="mt-4 text-sm leading-relaxed text-navy-800 sm:text-sm">
+                WearGuard protects the high-impact zones where bulk materials change direction, accelerate and strike equipment surfaces. Our engineered chute, hopper and transfer-point solutions include liners, skirt systems, impact plates, rock-box components and bolt-in wear assemblies. Each system is tailored to material size, velocity, moisture and abrasion severity, helping reduce structural damage, simplify replacement, extend service intervals and keep critical material-handling points operating with fewer interruptions, greater reliability and lower maintenance costs.
+              </p>
 
-          {/* Section 5 Ticker Carousel (Natural Smooth Marquee) */}
-          <div className="mt-8 overflow-hidden relative w-full">
+              <div className="mt-6 group border border-line-200 border-l-2 border-l-amber-400 bg-paper-50 p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-l-4 hover:border-l-amber-500 hover:shadow-md hover:shadow-amber-900/5">
+                <h4 className="font-display text-base font-extrabold uppercase tracking-wider text-amber-600">
+                  Application-Matched Liner Systems
+                </h4>
+                <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-navy-700/75">
+                  Mixer Liners · Hopper Liners · Bin Liners · Skirt Liners · Impact Plates · Rock-Box Components · Wear Blocks
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center"
+            >
+              <div className="relative w-full overflow-hidden rounded-lg border border-line-200 bg-white shadow-md">
+                <PhotoPlaceholder
+                  motif="parts"
+                  image="/images/materials/wear-steel.png"
+                  className="aspect-[4/3] w-full object-cover"
+                  label="Liner Systems & Wear Plates"
+                />
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Marquee Pills */}
+          <div className="mt-12 overflow-hidden relative w-full">
             <motion.div
               animate={{ x: ["0%", "-50%"] }}
               transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
@@ -511,28 +1151,103 @@ export default function WearGuard() {
         </div>
       </section>
 
-      {/* SECTION 6: Material Technologies */}
+      {/* ── SECTION 6: MATERIAL TECHNOLOGIES — Studio Product Photos Slideshow + Running Pills ── */}
       <section id="material-technologies" className="scroll-mt-20 section-pad bg-paper-100 border-t border-line-200">
         <div className="container-xl">
-          <SectionHeading
-            kicker="Application-engineered materials for longer service life"
-            title="Material"
-            accent="Technologies"
-            description="WearGuard combines advanced materials with application-specific engineering to solve difficult wear problems. Solutions include abrasive-resistant steel, hardfaced plates, premium castings, ceramic liners, rubber-ceramic systems, polymers and low-friction materials. Replaceable sacrificial strips and inserts protect structural components while simplifying maintenance. By matching material technology to impact, abrasion, temperature, corrosion and flow conditions, we deliver longer service life, improved reliability and lower total ownership cost across demanding industrial equipment and process applications."
-          />
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 lg:items-center">
+            
+            {/* Left Side Slideshow Container */}
+            <motion.div
+              initial={{ opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center"
+            >
+              <div
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+                className="relative w-full overflow-hidden rounded-lg border border-line-200 bg-white shadow-md aspect-[4/3] group transition-all duration-500 hover:border-amber-400 hover:shadow-xl hover:shadow-amber-500/15 cursor-pointer"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={slideIdx}
+                    initial={{ opacity: 0, scale: 1.02 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.5 }}
+                    className="relative w-full h-full"
+                  >
+                    <img
+                      src={MATERIAL_SLIDES[slideIdx].image}
+                      alt={MATERIAL_SLIDES[slideIdx].title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent pointer-events-none" />
 
-          {/* Right Material Card - Placed above the sliding pills (Left-aligned) */}
-          <div className="mt-8 max-w-3xl group border border-line-200 border-l-2 border-l-amber-400 bg-white p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-l-4 hover:border-l-amber-500 hover:shadow-md hover:shadow-amber-900/5">
-            <h4 className="font-display text-base font-extrabold uppercase tracking-wider text-amber-600">
-              Right Material for the Right Wear Zone
-            </h4>
-            <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-navy-700/75">
-              Premium wear plate and hardfaced components provide robust protection in high-abrasion zones exposed to sliding, scraping and continuous material flow.
-            </p>
+                    {/* Active Slide Info Overlay */}
+                    <div className="absolute bottom-4 left-4 right-4 text-white flex items-end justify-between z-10 pointer-events-none">
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400 bg-navy-950/80 px-2 py-0.5 rounded border border-amber-400/30">
+                          {MATERIAL_SLIDES[slideIdx].tag}
+                        </span>
+                        <h4 className="font-display text-lg font-bold uppercase mt-1 text-white">
+                          {MATERIAL_SLIDES[slideIdx].title}
+                        </h4>
+                        <p className="text-xs text-white/75 font-mono">
+                          {MATERIAL_SLIDES[slideIdx].subtitle}
+                        </p>
+                      </div>
+
+                      {/* Manual Slide Dots */}
+                      <div className="flex items-center gap-1.5 pointer-events-auto">
+                        {MATERIAL_SLIDES.map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setSlideIdx(i)}
+                            className={`h-2 rounded-full transition-all ${
+                              slideIdx === i ? "w-6 bg-amber-400" : "w-2 bg-white/40 hover:bg-white"
+                            }`}
+                            aria-label={`Go to slide ${i + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </motion.div>
+
+            {/* Right Content Side */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
+                — Application-engineered materials for longer service life
+              </p>
+              <h2 className="font-display text-3xl font-bold uppercase leading-[1.05] text-navy-950 sm:text-4xl lg:text-5xl">
+                Material <span className="text-amber-500">Technologies</span>
+              </h2>
+              <p className="mt-4 text-sm leading-relaxed text-navy-800 sm:text-sm">
+                WearGuard combines advanced materials with application-specific engineering to solve difficult wear problems. Solutions include abrasive-resistant steel, hardfaced plates, premium castings, ceramic liners, rubber-ceramic systems, polymers and low-friction materials. Replaceable sacrificial strips and inserts protect structural components while simplifying maintenance. By matching material technology to impact, abrasion, temperature, corrosion and flow conditions, we deliver longer service life, improved reliability and lower total ownership cost across demanding industrial equipment and process applications.
+              </p>
+
+              <div className="mt-6 group border border-line-200 border-l-2 border-l-amber-400 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-l-4 hover:border-l-amber-500 hover:shadow-md hover:shadow-amber-900/5">
+                <h4 className="font-display text-base font-extrabold uppercase tracking-wider text-amber-600">
+                  Right Material for the Right Wear Zone
+                </h4>
+                <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-navy-700/75">
+                  Wear Steel | Hardfaced Plate | Premium Castings | Ceramic Liners | Rubber-Ceramic | Polymer Liners | Sacrificial Inserts
+                </p>
+              </div>
+            </motion.div>
           </div>
 
-          {/* Section 6 Ticker Carousel (Natural Smooth Marquee) */}
-          <div className="mt-8 overflow-hidden relative w-full">
+          {/* Running Marquee Pills for Material Technologies */}
+          <div className="mt-12 overflow-hidden relative w-full">
             <motion.div
               animate={{ x: ["0%", "-50%"] }}
               transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
@@ -577,7 +1292,6 @@ export default function WearGuard() {
             description="Custom-built wear materials for abrasion, impact, erosion and high-temperature service."
           />
 
-          {/* Selection Guidance Card - Moved above the accordions */}
           <div className="mt-8 group border border-line-200 border-l-2 border-l-amber-400 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-l-4 hover:border-l-amber-500 hover:shadow-md hover:shadow-amber-900/5">
             <h4 className="font-display text-base font-extrabold uppercase tracking-wider text-amber-600">
               Selection Guidance
@@ -697,9 +1411,9 @@ export default function WearGuard() {
               <div className="relative w-full overflow-hidden rounded-lg border border-line-200 bg-white shadow-md">
                 <PhotoPlaceholder
                   motif="parts"
-                  image="/images/wearguard-parts.png"
+                  image="/images/materials/sacrificial-inserts.png"
                   className="aspect-[4/3] w-full object-cover"
-                  label="Earthmoving & Casting Range"
+                  label="Custom Castings & Tips"
                 />
               </div>
             </motion.div>
@@ -708,13 +1422,12 @@ export default function WearGuard() {
       </section>
 
       {/* Distinct CTA & Results Section */}
-      <section className="section-pad relative overflow-hidden bg-gradient-to-b from-paper-100 to-paper-200 border-t border-line-200">
+      <section className="section-pad relative overflow-hidden bg-gradient-to-b from-paper-100 to-paper-200 border-t border-line-200" id="auditForm">
         <div className="container-xl relative">
           <div className="relative overflow-hidden border border-line-200 bg-white p-8 shadow-md sm:p-12 lg:p-14">
             <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 via-amber-500 to-teal-500" />
 
             <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
-              {/* Left Column: Heading & Value Prop */}
               <div className="lg:col-span-7">
                 <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-widest text-amber-700">
                   <Gauge size={14} className="text-amber-600" /> Wear Solutions · Real Results
@@ -745,7 +1458,6 @@ export default function WearGuard() {
                 </div>
               </div>
 
-              {/* Right Column: Key Metrics & Highlights */}
               <div className="grid gap-4 sm:grid-cols-2 lg:col-span-5">
                 {[
                   { title: "1–10 Unit Runs", desc: "Small-batch flexibility with no massive upfront tooling costs." },
