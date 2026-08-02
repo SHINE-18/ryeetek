@@ -7,7 +7,12 @@ export default function SectionHeading({
   description,
   align = "left",
   light = false,
+  accentColor = "teal", // "teal" | "amber"
 }) {
+  const isAmber = accentColor === "amber";
+  const textColor = isAmber ? "text-amber-500" : "text-teal-500";
+  const bgColor = isAmber ? "bg-amber-500" : "bg-teal-500";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -17,8 +22,8 @@ export default function SectionHeading({
       className={`max-w-2xl ${align === "center" ? "mx-auto text-center" : ""}`}
     >
       {kicker && (
-        <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-teal-500">
-          <span className="h-px w-6 bg-teal-500" />
+        <p className={`mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] ${textColor}`}>
+          <span className={`h-px w-6 ${bgColor}`} />
           {kicker}
         </p>
       )}
@@ -27,7 +32,7 @@ export default function SectionHeading({
           light ? "text-white" : "text-navy-950"
         }`}
       >
-        {title} {accent && <span className="text-teal-500">{accent}</span>}
+        {title} {accent && <span className={textColor}>{accent}</span>}
       </h2>
       {description && (
         <p className={`mt-4 text-base leading-relaxed ${light ? "text-white/70" : "text-navy-700/80"}`}>
@@ -37,3 +42,4 @@ export default function SectionHeading({
     </motion.div>
   );
 }
+

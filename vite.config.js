@@ -193,6 +193,7 @@ function extractPage10Images(publicMatDir) {
 function brochureServePlugin() {
   const brochureSourceDir = path.resolve(__dirname, '..', '..', 'ryetek-app', 'public', 'images', 'brochure')
   const brainDir = 'C:/Users/shine/.gemini/antigravity-ide/brain/bd865248-f24a-4d92-b802-ab8e19f0df3c'
+  const brainDir2 = 'C:/Users/shine/.gemini/antigravity-ide/brain/92f902f8-6747-4fc9-af15-6715c1fed6da'
 
   const materialMap = {
     'wear-steel.png': 'mat_wear_steel_1785583979224.png',
@@ -208,6 +209,14 @@ function brochureServePlugin() {
     'filter-combo.png': 'filter_assembly_combo_1785590336167.png',
     'mixer-paddle-arms.png': 'mixer_paddle_arms_1785590736541.png',
     'arm-protection.png': 'arm_protection_covers_1785590749058.png',
+    'product-lines-dryer-drum.png': '__BRAIN2__product_dryer_drum_1785678640882.png',
+    'product-lines-pugmill-mixer.png': '__BRAIN2__product_pugmill_mixer_1785678651086.png',
+    'product-lines-custom-wear.png': '__BRAIN2__product_custom_wear_1785678669341.png',
+    'elevator-combo.png': '__BRAIN2__elev_combo_suite_1785679338673.png',
+    'elevator-buckets.png': '__BRAIN2__elev_buckets_deep_1785679350218.png',
+    'drive-sprockets.png': '__BRAIN2__elev_drive_sprockets_1785679360307.png',
+    'elevator-plant.png': '__BRAIN2__elev_plant_system_1785679370536.png',
+    'wearguard-hero.png': '__BRAIN2__wearguard_hero_industrial_1785681017530.png',
   }
 
   // Ensure public/images/materials directory exists and contains the files
@@ -217,7 +226,12 @@ function brochureServePlugin() {
     
     // Copy brain artifacts
     Object.entries(materialMap).forEach(([targetName, srcName]) => {
-      const srcPath = path.join(brainDir, srcName)
+      let srcPath
+      if (srcName.startsWith('__BRAIN2__')) {
+        srcPath = path.join(brainDir2, srcName.replace('__BRAIN2__', ''))
+      } else {
+        srcPath = path.join(brainDir, srcName)
+      }
       const targetPath = path.join(publicMatDir, targetName)
       if (fs.existsSync(srcPath)) {
         fs.copyFileSync(srcPath, targetPath)
@@ -244,7 +258,12 @@ function brochureServePlugin() {
           const mappedName = materialMap[fileName]
           
           if (mappedName) {
-            const brainPath = path.join(brainDir, mappedName)
+            let brainPath
+            if (mappedName.startsWith('__BRAIN2__')) {
+              brainPath = path.join(brainDir2, mappedName.replace('__BRAIN2__', ''))
+            } else {
+              brainPath = path.join(brainDir, mappedName)
+            }
             if (fs.existsSync(brainPath)) {
               res.setHeader('Content-Type', 'image/png')
               res.setHeader('Cache-Control', 'no-cache')

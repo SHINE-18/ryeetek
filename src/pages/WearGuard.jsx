@@ -50,14 +50,45 @@ const ENGINEERING = [
   },
 ];
 
+// ── REUSABLE INFINITE MARQUEE PILLS ──────────────────────────────────────────
+const MarqueePills = ({ items, icon: Icon, bgClass = "bg-paper-50", sectionBg = "from-white", speed = 35 }) => {
+  // Quadruple items so the loop never runs out of content on wide screens
+  const quadItems = [...items, ...items, ...items, ...items];
+  
+  return (
+    <div className="relative mt-12 w-full overflow-hidden py-1">
+      {/* Subtle edge fade overlays */}
+      <div className={`pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-16 sm:w-24 bg-gradient-to-r ${sectionBg} to-transparent`} />
+      <div className={`pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-16 sm:w-24 bg-gradient-to-l ${sectionBg} to-transparent`} />
+
+      <motion.div
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ repeat: Infinity, duration: speed, ease: "linear" }}
+        className="flex w-max gap-3"
+      >
+        {quadItems.map((tag, idx) => (
+          <span
+            key={idx}
+            className={`inline-flex items-center gap-1.5 rounded-full border border-navy-950/15 ${bgClass} px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-navy-950 shadow-sm whitespace-nowrap`}
+          >
+            {Icon && <Icon size={13} className="text-amber-500 shrink-0" />}
+            {tag}
+          </span>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
 const PRODUCT_LINES = [
+
   {
     id: "rotary-dryers",
     name: "Dryer Drum Wear Components",
     badge: "Dryer Range",
     body: "Sprockets and trunnion wheels, drum internals and discharge flights, thrust and trunnion wheels for any brand, any era. Heavy-duty trunnion wheels and rollers, dryer rings, girth gears and machined components, heat-treated to meet rigorous performance requirements.",
     items: ["Trunnion wheels & rollers", "Internal flighting & veeing flights", "Thrust roller assemblies", "Girth gear & pinion sets", "Seal rings & housing components"],
-    image: "/images/rotary-dryer.png",
+    image: "/images/materials/product-lines-dryer-drum.png",
     motif: "drum",
   },
   {
@@ -66,7 +97,7 @@ const PRODUCT_LINES = [
     badge: "Mixer Range",
     body: "Premium mixer components engineered for maximum wear life including mixer liners, paddles, tips and other critical wear parts in Ni-Hard or high-chrome premium castings, with smart arm-protection covers to shield softer cast mixer arms from direct abrasion.",
     items: ["Mixer tips, paddles & arms", "Ni-Hard & high-chrome liner plates", "Arm protection guards & covers", "Discharge door seals & liners", "Shaft sleeve protectors"],
-    image: "/images/materials/premium-castings.png",
+    image: "/images/materials/product-lines-pugmill-mixer.png",
     motif: "gears",
   },
   {
@@ -75,7 +106,7 @@ const PRODUCT_LINES = [
     badge: "Custom Range",
     body: "We reverse-engineer (design to prototype) even low-volume parts for freedom from paying premium for OEM monopolies. Every part is custom designed to outlast the original, not just match its dimensions.",
     items: ["3D laser scanning & reverse engineering", "Alloy selection for specific abrasive duties", "Pattern making & trial castings", "Small-run & prototype production", "Hardness & metallurgy reporting"],
-    image: "/images/materials/sacrificial-inserts.png",
+    image: "/images/materials/product-lines-custom-wear.png",
     motif: "parts",
   },
 ];
@@ -171,7 +202,7 @@ const ELEVATOR_SLIDES = [
     id: "material-handling",
     title: "Bucket Elevator Plant System",
     subtitle: "Heavy-Duty Bulk Handling & Conveying Towers",
-    image: "/images/material-handling.png",
+    image: "/images/materials/elevator-plant.png",
     tag: "High-Capacity Elevators",
   },
 ];
@@ -203,6 +234,38 @@ const MIXER_SLIDES = [
     id: "sacrificial-inserts",
     title: "Mixer Wear Blocks & Liners",
     subtitle: "Replaceable Sacrificial Wear Liners",
+    image: "/images/materials/sacrificial-inserts.png",
+    tag: "Quick Replacement",
+  },
+];
+
+// ── FLOW & WEAR LINERS SLIDESHOW DATA ─────────────────────────────────────────
+const FLOW_SLIDES = [
+  {
+    id: "wear-steel-liners",
+    title: "Wear Steel Chute Liners",
+    subtitle: "Quenched & Tempered P400/P500 Liners",
+    image: "/images/materials/wear-steel.png",
+    tag: "Chute Protection",
+  },
+  {
+    id: "hardfaced-impact",
+    title: "Hardfaced Impact Plates",
+    subtitle: "58–65 HRC Chromium-Carbide Matrix",
+    image: "/images/materials/hardfaced-plate.png",
+    tag: "High Velocity Impact",
+  },
+  {
+    id: "ceramic-liners",
+    title: "Alumina Ceramic Wear Liners",
+    subtitle: "92% & 95% High-Purity Ceramic Tiles",
+    image: "/images/materials/ceramic-liners.png",
+    tag: "Sliding Abrasion",
+  },
+  {
+    id: "sacrificial-bars",
+    title: "Sacrificial Inserts & Wear Bars",
+    subtitle: "Replaceable Bolt-In & Weld-On Runner Bars",
     image: "/images/materials/sacrificial-inserts.png",
     tag: "Quick Replacement",
   },
@@ -284,6 +347,9 @@ export default function WearGuard() {
   const [mixerSlideIdx, setMixerSlideIdx] = useState(0);
   const [isMixerPaused, setIsMixerPaused] = useState(false);
 
+  const [flowSlideIdx, setFlowSlideIdx] = useState(0);
+  const [isFlowPaused, setIsFlowPaused] = useState(false);
+
   // Auto-play Material Technologies slideshow
   useEffect(() => {
     if (isPaused) return;
@@ -329,6 +395,15 @@ export default function WearGuard() {
     return () => clearInterval(timer);
   }, [isMixerPaused]);
 
+  // Auto-play Flow & Wear Liners slideshow
+  useEffect(() => {
+    if (isFlowPaused) return;
+    const timer = setInterval(() => {
+      setFlowSlideIdx((prev) => (prev + 1) % FLOW_SLIDES.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [isFlowPaused]);
+
   return (
     <div>
       <SEO
@@ -339,9 +414,9 @@ export default function WearGuard() {
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-navy-950 pt-32 pb-20 lg:pt-40 lg:pb-24">
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[42%] lg:block">
-          <PhotoPlaceholder motif="drum" image="/images/wearguard-callout.png" className="h-full w-full object-cover opacity-70" label="Product photography" />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/70 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[48%] lg:block">
+          <PhotoPlaceholder motif="parts" image="/images/materials/wearguard-hero.png" className="h-full w-full object-cover opacity-85" label="WearGuard Cast Alloy Liner" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/60 to-transparent" />
         </div>
         <div className="container-xl relative">
           <div className="max-w-2xl">
@@ -382,6 +457,7 @@ export default function WearGuard() {
             kicker="Engineered solutions. Built to last."
             title="WearGuard delivers advanced"
             accent="wear solutions"
+            accentColor="amber"
             description="Extended component life, reduced downtime, and lower total cost of ownership in the world's toughest industries."
           />
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -574,36 +650,20 @@ export default function WearGuard() {
           </div>
 
           {/* Running Marquee Pills for Dryer Components */}
-          <div className="mt-12 overflow-hidden relative w-full">
-            <motion.div
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-              className="flex w-max gap-3 py-1"
-            >
-              {[
-                "Trunnion Wheels & Rollers",
-                "CFD Lifter Flights",
-                "Girth Gears & Pinions",
-                "Thrust Roller Assemblies",
-                "Discharge Flights",
-                "Seal Rings & Bearings",
-                "Trunnion Wheels & Rollers",
-                "CFD Lifter Flights",
-                "Girth Gears & Pinions",
-                "Thrust Roller Assemblies",
-                "Discharge Flights",
-                "Seal Rings & Bearings",
-              ].map((tag, idx) => (
-                <span
-                  key={idx}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-navy-950/15 bg-paper-50 px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-navy-950 shadow-sm whitespace-nowrap"
-                >
-                  <RotateCw size={13} className="text-amber-500 shrink-0" />
-                  {tag}
-                </span>
-              ))}
-            </motion.div>
-          </div>
+          {/* <MarqueePills
+            items={[
+              "Trunnion Wheels & Rollers",
+              "CFD Lifter Flights",
+              "Girth Gears & Pinions",
+              "Thrust Roller Assemblies",
+              "Discharge Flights",
+              "Seal Rings & Bearings",
+            ]}
+            icon={RotateCw}
+            bgClass="bg-paper-50"
+            sectionBg="from-white"
+            speed={35}
+          /> */}
         </div>
       </section>
 
@@ -705,36 +765,20 @@ export default function WearGuard() {
           </div>
 
           {/* Running Marquee Pills for Filter Components */}
-          <div className="mt-12 overflow-hidden relative w-full">
-            <motion.div
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-              className="flex w-max gap-3 py-1"
-            >
-              {[
-                "Nomex® Filter Bags",
-                "Stainless Steel Cages",
-                "Exhaust Fan Impellers",
-                "Meta-Aramid Bags",
-                "Blower Scroll Housings",
-                "Plenum Plates & Snap Rings",
-                "Nomex® Filter Bags",
-                "Stainless Steel Cages",
-                "Exhaust Fan Impellers",
-                "Meta-Aramid Bags",
-                "Blower Scroll Housings",
-                "Plenum Plates & Snap Rings",
-              ].map((tag, idx) => (
-                <span
-                  key={idx}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-navy-950/15 bg-white px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-navy-950 shadow-sm whitespace-nowrap"
-                >
-                  <Filter size={13} className="text-amber-500 shrink-0" />
-                  {tag}
-                </span>
-              ))}
-            </motion.div>
-          </div>
+          {/* <MarqueePills
+            items={[
+              "Nomex® Filter Bags",
+              "Stainless Steel Cages",
+              "Exhaust Fan Impellers",
+              "Meta-Aramid Bags",
+              "Blower Scroll Housings",
+              "Plenum Plates & Snap Rings",
+            ]}
+            icon={Filter}
+            bgClass="bg-white"
+            sectionBg="from-paper-100"
+            speed={35}
+          /> */}
         </div>
       </section>
 
@@ -863,36 +907,20 @@ export default function WearGuard() {
           </div>
 
           {/* Running Marquee Pills for Mixer Components */}
-          <div className="mt-12 overflow-hidden relative w-full">
-            <motion.div
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-              className="flex w-max gap-3 py-1"
-            >
-              {[
-                "Mixer Paddle Arms",
-                "Arm Protection Covers",
-                "Ni-Hard Liner Plates",
-                "High-Chrome Tips",
-                "Mixer Shaft Sleeves",
-                "Discharge Door Liners",
-                "Mixer Paddle Arms",
-                "Arm Protection Covers",
-                "Ni-Hard Liner Plates",
-                "High-Chrome Tips",
-                "Mixer Shaft Sleeves",
-                "Discharge Door Liners",
-              ].map((tag, idx) => (
-                <span
-                  key={idx}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-navy-950/15 bg-paper-50 px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-navy-950 shadow-sm whitespace-nowrap"
-                >
-                  <Cog size={13} className="text-amber-500 shrink-0" />
-                  {tag}
-                </span>
-              ))}
-            </motion.div>
-          </div>
+          {/* <MarqueePills
+            items={[
+              "Mixer Paddle Arms",
+              "Arm Protection Covers",
+              "Ni-Hard Liner Plates",
+              "High-Chrome Tips",
+              "Mixer Shaft Sleeves",
+              "Discharge Door Liners",
+            ]}
+            icon={Cog}
+            bgClass="bg-paper-50"
+            sectionBg="from-white"
+            speed={35}
+          /> */}
 
           {/* Core Product lines grid */}
           <div className="mt-14 pt-10 border-t border-line-200">
@@ -1034,36 +1062,20 @@ export default function WearGuard() {
           </div>
 
           {/* Running Marquee Pills for Elevator Components */}
-          <div className="mt-12 overflow-hidden relative w-full">
-            <motion.div
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-              className="flex w-max gap-3 py-1"
-            >
-              {[
-                "Elevator Buckets",
-                "Drive Sprockets",
-                "Traction Wheels",
-                "Forged Drag Chains",
-                "Conveyor Skirt Liners",
-                "Impact Flights",
-                "Elevator Buckets",
-                "Drive Sprockets",
-                "Traction Wheels",
-                "Forged Drag Chains",
-                "Conveyor Skirt Liners",
-                "Impact Flights",
-              ].map((tag, idx) => (
-                <span
-                  key={idx}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-navy-950/15 bg-white px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-navy-950 shadow-sm whitespace-nowrap"
-                >
-                  <Layers3 size={13} className="text-amber-500 shrink-0" />
-                  {tag}
-                </span>
-              ))}
-            </motion.div>
-          </div>
+          {/* <MarqueePills
+            items={[
+              "Elevator Buckets",
+              "Drive Sprockets",
+              "Traction Wheels",
+              "Forged Drag Chains",
+              "Conveyor Skirt Liners",
+              "Impact Flights",
+            ]}
+            icon={Layers3}
+            bgClass="bg-white"
+            sectionBg="from-paper-100"
+            speed={35}
+          /> */}
         </div>
       </section>
 
@@ -1097,6 +1109,7 @@ export default function WearGuard() {
               </div>
             </motion.div>
 
+            {/* Flow & Wear Liners Slideshow Container */}
             <motion.div
               initial={{ opacity: 0, x: 24 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -1104,50 +1117,77 @@ export default function WearGuard() {
               transition={{ duration: 0.5 }}
               className="flex items-center"
             >
-              <div className="relative w-full overflow-hidden rounded-lg border border-line-200 bg-white shadow-md">
-                <PhotoPlaceholder
-                  motif="parts"
-                  image="/images/materials/wear-steel.png"
-                  className="aspect-[4/3] w-full object-cover"
-                  label="Liner Systems & Wear Plates"
-                />
+              <div
+                onMouseEnter={() => setIsFlowPaused(true)}
+                onMouseLeave={() => setIsFlowPaused(false)}
+                className="relative w-full overflow-hidden rounded-lg border border-line-200 bg-white shadow-md aspect-[4/3] group transition-all duration-500 hover:border-amber-400 hover:shadow-xl hover:shadow-amber-500/15 cursor-pointer"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={flowSlideIdx}
+                    initial={{ opacity: 0, scale: 1.02 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.5 }}
+                    className="relative w-full h-full"
+                  >
+                    <img
+                      src={FLOW_SLIDES[flowSlideIdx].image}
+                      alt={FLOW_SLIDES[flowSlideIdx].title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent pointer-events-none" />
+
+                    {/* Active Flow Slide Info Overlay */}
+                    <div className="absolute bottom-4 left-4 right-4 text-white flex items-end justify-between z-10 pointer-events-none">
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400 bg-navy-950/80 px-2 py-0.5 rounded border border-amber-400/30">
+                          {FLOW_SLIDES[flowSlideIdx].tag}
+                        </span>
+                        <h4 className="font-display text-lg font-bold uppercase mt-1 text-white">
+                          {FLOW_SLIDES[flowSlideIdx].title}
+                        </h4>
+                        <p className="text-xs text-white/75 font-mono">
+                          {FLOW_SLIDES[flowSlideIdx].subtitle}
+                        </p>
+                      </div>
+
+                      {/* Manual Slide Dots */}
+                      <div className="flex items-center gap-1.5 pointer-events-auto">
+                        {FLOW_SLIDES.map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setFlowSlideIdx(i)}
+                            className={`h-2 rounded-full transition-all ${
+                              flowSlideIdx === i ? "w-6 bg-amber-400" : "w-2 bg-white/40 hover:bg-white"
+                            }`}
+                            aria-label={`Go to slide ${i + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </motion.div>
           </div>
 
           {/* Marquee Pills */}
-          <div className="mt-12 overflow-hidden relative w-full">
-            <motion.div
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-              className="flex w-max gap-3 py-1"
-            >
-              {[
-                "Mixer Liners",
-                "Hopper Liners",
-                "Bin Liners",
-                "Skirt Liners",
-                "Impact Plates",
-                "Rock-Box Components",
-                "Wear Blocks",
-                "Mixer Liners",
-                "Hopper Liners",
-                "Bin Liners",
-                "Skirt Liners",
-                "Impact Plates",
-                "Rock-Box Components",
-                "Wear Blocks",
-              ].map((tag, idx) => (
-                <span
-                  key={idx}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-navy-950/10 bg-paper-50 px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-navy-950 shadow-sm whitespace-nowrap"
-                >
-                  <CheckCircle2 size={13} className="text-amber-500 shrink-0" />
-                  {tag}
-                </span>
-              ))}
-            </motion.div>
-          </div>
+          {/* <MarqueePills
+            items={[
+              "Mixer Liners",
+              "Hopper Liners",
+              "Bin Liners",
+              "Skirt Liners",
+              "Impact Plates",
+              "Rock-Box Components",
+              "Wear Blocks",
+            ]}
+            icon={CheckCircle2}
+            bgClass="bg-paper-50"
+            sectionBg="from-white"
+            speed={35}
+          /> */}
         </div>
       </section>
 
@@ -1247,38 +1287,21 @@ export default function WearGuard() {
           </div>
 
           {/* Running Marquee Pills for Material Technologies */}
-          <div className="mt-12 overflow-hidden relative w-full">
-            <motion.div
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-              className="flex w-max gap-3 py-1"
-            >
-              {[
-                "Wear Steel",
-                "Hardfaced Plate",
-                "Premium Castings",
-                "Ceramic Liners",
-                "Rubber-Ceramic",
-                "Polymer Liners",
-                "Sacrificial Inserts",
-                "Wear Steel",
-                "Hardfaced Plate",
-                "Premium Castings",
-                "Ceramic Liners",
-                "Rubber-Ceramic",
-                "Polymer Liners",
-                "Sacrificial Inserts",
-              ].map((tag, idx) => (
-                <span
-                  key={idx}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-navy-950/15 bg-white px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-navy-950 shadow-sm whitespace-nowrap"
-                >
-                  <Sparkles size={13} className="text-amber-500 shrink-0" />
-                  {tag}
-                </span>
-              ))}
-            </motion.div>
-          </div>
+          <MarqueePills
+            items={[
+              "Wear Steel",
+              "Hardfaced Plate",
+              "Premium Castings",
+              "Ceramic Liners",
+              "Rubber-Ceramic",
+              "Polymer Liners",
+              "Sacrificial Inserts",
+            ]}
+            icon={Sparkles}
+            bgClass="bg-white"
+            sectionBg="from-paper-100"
+            speed={35}
+          />
         </div>
       </section>
 
@@ -1289,6 +1312,7 @@ export default function WearGuard() {
             kicker="Technical Specifications"
             title="Select the Right"
             accent="Wear Solution"
+            accentColor="amber"
             description="Custom-built wear materials for abrasion, impact, erosion and high-temperature service."
           />
 
