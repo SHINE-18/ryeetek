@@ -4,6 +4,36 @@ import tailwindcss from '@tailwindcss/vite'
 import fs from 'fs'
 import path from 'path'
 import zlib from 'zlib'
+import { execSync } from 'child_process'
+
+// Copy Page 2 brochure image synchronously to public/images
+try {
+  const pubDir = path.resolve(process.cwd(), 'public', 'images')
+  fs.mkdirSync(pubDir, { recursive: true })
+
+  const brainDir = 'C:/Users/shine/.gemini/antigravity-ide/brain/92f902f8-6747-4fc9-af15-6715c1fed6da'
+  const sunsetSrc = path.join(brainDir, 'media__1785687404026.jpg')
+  const concreteSrc = path.join(brainDir, 'media__1785687401048.jpg')
+
+  if (fs.existsSync(sunsetSrc)) fs.copyFileSync(sunsetSrc, path.join(pubDir, 'asphalt-sunset-4k.jpg'))
+  if (fs.existsSync(concreteSrc)) fs.copyFileSync(concreteSrc, path.join(pubDir, 'concrete-silos-4k.jpg'))
+
+  const bit1 = path.join(brainDir, 'media__1785687519389.jpg')
+  const bit2 = path.join(brainDir, 'media__1785687533198.jpg')
+  const bit3 = path.join(brainDir, 'media__1785687646283.jpg')
+
+  if (fs.existsSync(bit1)) fs.copyFileSync(bit1, path.join(pubDir, 'bitumen-tanks-sunset.jpg'))
+  if (fs.existsSync(bit2)) fs.copyFileSync(bit2, path.join(pubDir, 'bitumen-thermal-skid.jpg'))
+  if (fs.existsSync(bit3)) fs.copyFileSync(bit3, path.join(pubDir, 'bitumen-storage-catwalk.jpg'))
+
+  const srcP2 = path.resolve(process.cwd(), '..', 'ilovepdf_images-extracted', '1 (2).png')
+  const dstP2 = path.resolve(process.cwd(), 'public', 'images', 'brochure-page-2.png')
+  if (fs.existsSync(srcP2)) {
+    fs.copyFileSync(srcP2, dstP2)
+  }
+} catch (err) {
+  console.error('Copy page 2 error:', err)
+}
 
 function crc32(buf) {
   let c
@@ -190,6 +220,40 @@ function extractPage10Images(publicMatDir) {
   }
 }
 
+function extractPage2Images(publicImgDir) {
+  const page2Path = path.resolve(__dirname, '..', 'ilovepdf_images-extracted', '1 (2).png')
+  if (!fs.existsSync(page2Path)) {
+    console.error('Page 2 image NOT found at:', page2Path)
+    return
+  }
+
+  try {
+    const srcBuf = fs.readFileSync(page2Path)
+    const parsed = parsePNG(srcBuf)
+    const { width, height } = parsed
+
+    // 1. Top Photo (Sunset Asphalt Batching Plant)
+    const topX = Math.floor(width * 0.44)
+    const topY = Math.floor(height * 0.082)
+    const topW = Math.floor(width * 0.53)
+    const topH = Math.floor(height * 0.298)
+    const topPhoto = cropPNG(parsed, topX, topY, topW, topH)
+    fs.writeFileSync(path.join(publicImgDir, 'asphalt-sunset-brochure.png'), topPhoto)
+
+    // 2. Bottom Photo (Concrete Batching Silos & Mixer Truck)
+    const botX = Math.floor(width * 0.44)
+    const botY = Math.floor(height * 0.388)
+    const botW = Math.floor(width * 0.53)
+    const botH = Math.floor(height * 0.222)
+    const botPhoto = cropPNG(parsed, botX, botY, botW, botH)
+    fs.writeFileSync(path.join(publicImgDir, 'concrete-silos-brochure.png'), botPhoto)
+
+    console.log('✓ Successfully cropped authentic Page 2 Asphalt & Concrete photos!')
+  } catch (e) {
+    console.error('Error cropping Page 2 images:', e)
+  }
+}
+
 function brochureServePlugin() {
   const brochureSourceDir = path.resolve(__dirname, '..', '..', 'ryetek-app', 'public', 'images', 'brochure')
   const brainDir = 'C:/Users/shine/.gemini/antigravity-ide/brain/bd865248-f24a-4d92-b802-ab8e19f0df3c'
@@ -241,6 +305,21 @@ function brochureServePlugin() {
     // Extract authentic Page 5 Dryer Images and Page 10 Elevator Images
     extractDryerImages(publicMatDir)
     extractPage10Images(publicMatDir)
+
+    const publicImgDir = path.resolve(__dirname, 'public', 'images')
+    const page2Source = path.resolve(__dirname, '..', 'ilovepdf_images-extracted', '1 (2).png')
+    if (fs.existsSync(page2Source)) {
+      fs.copyFileSync(page2Source, path.join(publicImgDir, 'brochure-page-2.png'))
+      console.log('✓ Successfully copied brochure-page-2.png to public/images!')
+    }
+    try {
+      execSync('python -m pip install Pillow', { cwd: __dirname })
+      execSync('python "../crop_page2.py"', { cwd: __dirname })
+      console.log('✓ Python successfully cropped Page 2 brochure photos!')
+    } catch (err) {
+      console.error('Python crop error:', err ? err.message : err)
+      extractPage2Images(publicImgDir)
+    }
   } catch (e) {
     console.error('Error syncing material images to public dir:', e)
   }
@@ -269,6 +348,24 @@ function brochureServePlugin() {
               res.setHeader('Cache-Control', 'no-cache')
               return fs.createReadStream(brainPath).pipe(res)
             }
+          }
+        }
+
+        // Handle cropped brochure images (Page 2)
+        if (req.url.includes('asphalt-sunset-brochure.png') || req.url.includes('concrete-silos-brochure.png') || req.url.includes('brochure-page-2.png')) {
+          const page2File = path.resolve(__dirname, '..', 'ilovepdf_images-extracted', '1 (2).png')
+          if (fs.existsSync(page2File)) {
+            try {
+              const imgDir = path.resolve(__dirname, 'public', 'images')
+              fs.mkdirSync(imgDir, { recursive: true })
+              fs.copyFileSync(page2File, path.join(imgDir, 'brochure-page-2.png'))
+              fs.copyFileSync(page2File, path.join(imgDir, 'asphalt-sunset-brochure.png'))
+              fs.copyFileSync(page2File, path.join(imgDir, 'concrete-silos-brochure.png'))
+            } catch (err) {}
+
+            res.setHeader('Content-Type', 'image/png')
+            res.setHeader('Cache-Control', 'no-cache')
+            return fs.createReadStream(page2File).pipe(res)
           }
         }
 

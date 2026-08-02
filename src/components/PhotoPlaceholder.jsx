@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const MOTIFS = {
   silos: (
@@ -112,19 +112,81 @@ const MOTIFS = {
   ),
 };
 
-export default function PhotoPlaceholder({ motif = "silos", image, className = "", label }) {
+function CanvasCropImage({ src, cropRegion, alt }) {
+  const canvasRef = useRef(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    const targetSrc = src.startsWith("/") ? src : `/${src}`;
+    img.src = targetSrc;
+    img.onerror = () => setFailed(true);
+    img.onload = () => {
+      try {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        const w = img.naturalWidth;
+        const h = img.naturalHeight;
+
+        let sx = 0, sy = 0, sw = w, sh = h;
+        if (cropRegion === "top-sunset") {
+          sx = Math.floor(w * 0.44);
+          sy = Math.floor(h * 0.08);
+          sw = Math.floor(w * 0.53);
+          sh = Math.floor(h * 0.30);
+        } else if (cropRegion === "bottom-concrete") {
+          sx = Math.floor(w * 0.44);
+          sy = Math.floor(h * 0.388);
+          sw = Math.floor(w * 0.53);
+          sh = Math.floor(h * 0.22);
+        }
+
+        canvas.width = sw;
+        canvas.height = sh;
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
+      } catch (err) {
+        setFailed(true);
+      }
+    };
+  }, [src, cropRegion]);
+
+  if (failed) {
+    const isTop = cropRegion === "top-sunset";
+    return (
+      <img
+        src={src.startsWith("/") ? src : `/${src}`}
+        alt={alt}
+        className="h-full w-full object-cover"
+        style={{
+          objectPosition: isTop ? "85% 15%" : "85% 52%",
+          transform: isTop ? "scale(1.75)" : "scale(1.85)"
+        }}
+      />
+    );
+  }
+
+  return <canvas ref={canvasRef} className="h-full w-full object-cover" aria-label={alt} />;
+}
+
+export default function PhotoPlaceholder({ motif = "silos", image, className = "", label = "", imgStyle = {}, cropRegion }) {
   const [imgError, setImgError] = useState(false);
 
   return (
     <div
       className={`relative overflow-hidden bg-gradient-to-br from-navy-800 to-navy-950 text-teal-400 ${className}`}
     >
-      {image && !imgError ? (
+      {image && cropRegion ? (
+        <CanvasCropImage src={image} cropRegion={cropRegion} alt={label || motif} />
+      ) : image && !imgError ? (
         <img
-          src={image.startsWith("/") ? `${import.meta.env.BASE_URL}${image.slice(1)}` : image}
+          src={image.startsWith("/") ? image : `/${image}`}
           alt={label || motif}
           onError={() => setImgError(true)}
           className="h-full w-full object-cover"
+          style={imgStyle}
           loading="eager"
           decoding="async"
         />
@@ -139,7 +201,7 @@ export default function PhotoPlaceholder({ motif = "silos", image, className = "
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-navy-950/70 via-transparent to-transparent pointer-events-none" />
       {/* Only show placeholder label badge when using SVG fallback motif */}
-      {(!image || imgError) && label && (
+      {(!image || imgError) && !cropRegion && label && (
         <span className="absolute bottom-3 left-3 rounded bg-navy-950/70 px-2 py-1 text-[10px] font-medium uppercase tracking-wider text-teal-300 pointer-events-none">
           {label}
         </span>

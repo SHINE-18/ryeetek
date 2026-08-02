@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, CheckCircle2, ChevronDown } from "lucide-react";
+import { ArrowRight, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import PhotoPlaceholder from "../components/PhotoPlaceholder";
 import SEO from "../components/SEO";
 import { capabilities } from "../data/capabilities";
@@ -13,6 +13,125 @@ const HERO_SLIDES = [
   { image: "/images/material-handling.png", motif: "conveyor" },
   { image: "/images/scada-hmi.png", motif: "control" },
 ];
+
+function CapabilityCardSlideshow({ capId, capTitle, defaultMotif, slides, defaultImage }) {
+  const [slideIdx, setSlideIdx] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const activeSlides = slides && slides.length > 0 ? slides : [
+    { title: capTitle, subtitle: "Engineered System Package", image: defaultImage, tag: "Standard Scope" }
+  ];
+
+  useEffect(() => {
+    if (isPaused || activeSlides.length <= 1) return;
+    const timer = setInterval(() => {
+      setSlideIdx((prev) => (prev + 1) % activeSlides.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [isPaused, activeSlides.length]);
+
+  const current = activeSlides[slideIdx] || activeSlides[0];
+
+  return (
+    <div
+      className="relative w-full overflow-hidden rounded-xl border border-line-200 bg-navy-950 shadow-md transition-all hover:shadow-xl group/slide"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      <div className="relative aspect-[4/3] w-full overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={slideIdx}
+            initial={{ opacity: 0, scale: 1.02 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="absolute inset-0 h-full w-full"
+          >
+            <PhotoPlaceholder
+              motif={defaultMotif}
+              image={current.image || defaultImage}
+              className="h-full w-full object-cover"
+              imgStyle={current.imageStyle}
+              cropRegion={current.cropRegion}
+              label={current.title}
+            />
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Gradient Overlay for Readable Text */}
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/20 to-transparent pointer-events-none z-[5]" />
+
+        {/* Category / Feature Tag Badge */}
+        {current.tag && (
+          <div className="absolute top-3.5 left-3.5 z-10">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-teal-400/40 bg-navy-950/85 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-teal-300 backdrop-blur-md shadow-md">
+              <span className="h-1.5 w-1.5 rounded-full bg-teal-400 animate-pulse" />
+              {current.tag}
+            </span>
+          </div>
+        )}
+
+        {/* Slide Counter Indicator */}
+        {activeSlides.length > 1 && (
+          <div className="absolute top-3.5 right-3.5 z-10">
+            <span className="rounded-full border border-white/20 bg-navy-950/85 px-2.5 py-1 text-[10px] font-mono font-bold text-white/80 backdrop-blur-md">
+              {slideIdx + 1} / {activeSlides.length}
+            </span>
+          </div>
+        )}
+
+        {/* Slide Title & Subtitle Caption */}
+        <div className="absolute bottom-3.5 left-3.5 right-3.5 z-10">
+          <h4 className="font-display text-lg font-bold uppercase leading-tight text-white drop-shadow-sm">
+            {current.title}
+          </h4>
+          {current.subtitle && (
+            <p className="mt-0.5 text-xs text-teal-300/90 font-medium">
+              {current.subtitle}
+            </p>
+          )}
+        </div>
+
+        {/* Navigation Arrows */}
+        {activeSlides.length > 1 && (
+          <>
+            <button
+              onClick={() => setSlideIdx((prev) => (prev === 0 ? activeSlides.length - 1 : prev - 1))}
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-navy-950/80 text-white opacity-0 transition-all hover:bg-teal-500 hover:text-navy-950 group-hover/slide:opacity-100"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <button
+              onClick={() => setSlideIdx((prev) => (prev + 1) % activeSlides.length)}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-navy-950/80 text-white opacity-0 transition-all hover:bg-teal-500 hover:text-navy-950 group-hover/slide:opacity-100"
+              aria-label="Next slide"
+            >
+              <ChevronRight size={18} />
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* Dot Indicators Strip */}
+      {activeSlides.length > 1 && (
+        <div className="flex items-center justify-center gap-1.5 bg-navy-950 py-2 border-t border-white/10">
+          {activeSlides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setSlideIdx(i)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === slideIdx ? "w-6 bg-teal-400" : "w-1.5 bg-white/30 hover:bg-white/60"
+              }`}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Capabilities() {
   const { hash } = useLocation();
@@ -173,14 +292,13 @@ export default function Capabilities() {
                   transition={{ duration: 0.5 }}
                   className={`flex items-center ${imageFirst ? "lg:order-1" : "lg:order-2"}`}
                 >
-                  <div className="relative w-full overflow-hidden rounded-lg border border-line-200 bg-white shadow-md transition-all hover:shadow-lg">
-                    <PhotoPlaceholder
-                      motif={cap.motif}
-                      image={cap.image}
-                      className="aspect-[4/3] w-full object-cover"
-                      label={`${cap.title} ${cap.accent}`}
-                    />
-                  </div>
+                  <CapabilityCardSlideshow
+                    capId={cap.id}
+                    capTitle={`${cap.title} ${cap.accent}`}
+                    defaultMotif={cap.motif}
+                    slides={cap.slides}
+                    defaultImage={cap.image}
+                  />
                 </motion.div>
 
                 <motion.div
