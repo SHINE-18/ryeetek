@@ -413,22 +413,34 @@ export default function WearGuard() {
       />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-navy-950 pt-32 pb-20 lg:pt-40 lg:pb-24">
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[48%] lg:block">
-          <PhotoPlaceholder motif="parts" image="/images/materials/wearguard-hero.png" className="h-full w-full object-cover opacity-85" label="WearGuard Cast Alloy Liner" />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/60 to-transparent" />
+      <section className="relative overflow-hidden bg-[#0a1628] pt-32 pb-20 lg:pt-40 lg:pb-24">
+        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[65%] lg:block">
+          <PhotoPlaceholder motif="parts" image="/images/wearguard-hero-option2.png" className="h-full w-full object-cover" label="WearGuard Cast Alloy Liner" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628] via-[#0a1628]/85 via-45% to-transparent z-10" />
         </div>
-        <div className="container-xl relative">
-          <div className="max-w-2xl">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-amber-400">
+        <div className="container-xl relative z-20">
+          <div className="max-w-xl">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.25em] text-amber-400">
               A Ryetek Industrial Systems product line
             </p>
-            <h1 className="font-display text-4xl font-bold uppercase leading-[1.02] text-white sm:text-5xl lg:text-6xl">
-              Wear<span className="text-amber-400">Guard</span>
-            </h1>
-            <p className="mt-2 text-sm font-semibold uppercase tracking-[0.3em] text-white/50">
-              Outlast the grind
-            </p>
+
+            {/* 3D Metallic Emblem Header */}
+            <div className="relative my-3 inline-block rounded-xl border-2 border-amber-400/80 bg-gradient-to-b from-navy-900/90 via-navy-950 to-navy-950 px-6 py-4.5 shadow-[0_12px_35px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,215,0,0.5)] backdrop-blur-md">
+              {/* Metallic Top Reflection Line */}
+              <div className="absolute top-0 left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-amber-300 to-transparent" />
+              
+              <h1 className="font-display text-4xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-200 to-slate-400 drop-shadow-[0_4px_10px_rgba(0,0,0,0.9)] sm:text-5xl lg:text-6xl">
+                WEAR<span className="bg-clip-text bg-gradient-to-b from-amber-300 via-amber-400 to-amber-600 text-transparent">GUARD</span>
+              </h1>
+
+              <div className="mt-2 flex items-center justify-between gap-3 border-t border-amber-500/40 pt-2">
+                <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" />
+                <p className="font-display text-xs font-extrabold uppercase tracking-[0.35em] text-amber-300 drop-shadow-sm sm:text-sm">
+                  OUTLAST THE GRIND
+                </p>
+                <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-amber-400/60 to-transparent" />
+              </div>
+            </div>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-white/70">
               End wear nightmares with custom-engineered wear parts, tailored alloys,
               small-batch flexibility and fast global delivery — for dryer drums, mixers, filters and

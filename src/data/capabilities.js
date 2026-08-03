@@ -17,7 +17,7 @@ export const capabilities = [
     number: "01",
     icon: Factory,
     motif: "silos",
-    image: "/images/asphalt-plant.png",
+    image: "/images/CAPABILITIES/Ashphalt.png",
     title: "Concrete & Asphalt",
     accent: "Plant Solutions",
     summary:
@@ -49,8 +49,9 @@ export const capabilities = [
       },
     ],
     slides: [
-      { title: "Asphalt & Batching Plant", subtitle: "Sunset High-Capacity Production Tower & Wet Reflection", image: "/images/asphalt-sunset-4k.jpg", tag: "Asphalt Plant" },
-      { title: "Concrete Batching Plant", subtitle: "Aggregate Silos, Conveyor & Transit Mixer Truck", image: "/images/concrete-silos-4k.jpg", tag: "Concrete Plant" },
+      { title: "Asphalt & Batching Plant", subtitle: "High-Capacity Production Tower & Reflection", image: "/images/CAPABILITIES/Ashphalt.png", tag: "Asphalt Plant" },
+      { title: "Concrete Batching Plant", subtitle: "Aggregate Silos & Transit Mixer Truck", image: "/images/CAPABILITIES/Ashphalt1.png", tag: "Concrete Plant" },
+      { title: "Elevating Plant Systems", subtitle: "Integrated Elevator & Material Flow", image: "/images/materials/elevator-plant.png", tag: "Plant System" },
     ],
     highlights: [
       { title: "Engineered Solutions", body: "Designed and built to suit your materials, capacity and site conditions." },
@@ -68,7 +69,7 @@ export const capabilities = [
     number: "02",
     icon: Boxes,
     motif: "tanks",
-    image: "/images/bitumen-tanks.png",
+    image: "/images/CAPABILITIES/bitumen1.png",
     title: "Bitumen Storage",
     accent: "Systems",
     summary:
@@ -89,9 +90,9 @@ export const capabilities = [
       },
     ],
     slides: [
-      { title: "Vertical Storage Tanks", subtitle: "Heated Binder Storage & Piping Manifold", image: "/images/bitumen-tanks-sunset.jpg", tag: "Storage Manifold" },
-      { title: "Thermal Oil Skid Package", subtitle: "Circulation Pump Skid & Heat Exchanger", image: "/images/bitumen-thermal-skid.jpg", tag: "Thermal Skid" },
-      { title: "Vertical Tanks & Access Catwalk", subtitle: "Safety Railings, Staircases & Manifolds", image: "/images/bitumen-storage-catwalk.jpg", tag: "Storage Tanks" },
+      { title: "Vertical Storage Tanks", subtitle: "Heated Binder Storage & Piping Manifold", image: "/images/CAPABILITIES/bitumen1.png", tag: "Storage Manifold" },
+      { title: "Thermal Oil Skid Package", subtitle: "Circulation Pump Skid & Heat Exchanger", image: "/images/CAPABILITIES/bitumen2.png", tag: "Thermal Skid" },
+      { title: "Vertical Tanks & Access Catwalk", subtitle: "Safety Railings & Access Catwalk", image: "/images/CAPABILITIES/bitumen3.png", tag: "Storage Tanks" },
     ],
     highlights: [
       { title: "Thermal Stability", body: "Engineered layouts help maintain binder condition and create flow." },
@@ -109,7 +110,7 @@ export const capabilities = [
     number: "03",
     icon: FlaskConical,
     motif: "tanks",
-    image: "/images/process-systems.png",
+    image: "/images/CAPABILITIES/industrial process 1.png",
     title: "Industrial Process",
     accent: "Systems",
     summary:
@@ -130,10 +131,10 @@ export const capabilities = [
       },
     ],
     slides: [
-      { title: "Stainless Process Vessels", subtitle: "Modular Distillation & Skid Pipework", image: "/images/industrial-process-skid-vessels.png", tag: "Process Vessels" },
-      { title: "Integrated Process Skid", subtitle: "Modular Equipment & Pipework Frame", image: "/images/process-systems.png", tag: "Process Skid" },
-      { title: "Material Processing Unit", subtitle: "Batching, Mixing & Transformation", image: "/images/material-processing.png", tag: "Transformation Module" },
-      { title: "Contact Liners & Assemblies", subtitle: "Sacrificial Bars & Chute Protection", image: "/images/materials/sacrificial-inserts.png", tag: "Wear Protection" },
+      { title: "Stainless Process Vessels", subtitle: "Modular Distillation & Skid Pipework", image: "/images/CAPABILITIES/industrial process 1.png", tag: "Process Vessels" },
+      { title: "Integrated Process Skid", subtitle: "Modular Equipment & Pipework Frame", image: "/images/CAPABILITIES/industrial process 2.png", tag: "Process Skid" },
+      { title: "Material Processing Unit", subtitle: "Batching, Mixing & Transformation Unit", image: "/images/CAPABILITIES/industrial process3.png", tag: "Transformation Unit" },
+      // { title: "Contact Liners & Assemblies", subtitle: "Sacrificial Bars & Chute Protection", image: "/images/materials/sacrificial-inserts.png", tag: "Wear Protection" },
     ],
     highlights: [
       { title: "System Thinking", body: "Equipment is scoped as a working process, not as isolated fabricated items." },
@@ -151,7 +152,7 @@ export const capabilities = [
     number: "04",
     icon: Flame,
     motif: "drum",
-    image: "/images/rotary-dryer.png",
+    image: "/images/CAPABILITIES/Thermal1.png",
     title: "Thermal",
     accent: "Systems",
     summary:
@@ -172,9 +173,10 @@ export const capabilities = [
       },
     ],
     slides: [
-      { title: "Rotary Dryer Drum System", subtitle: "Controlled Process Drying & Heat Transfer", image: "/images/rotary-dryer.png", tag: "Rotary Dryer" },
-      { title: "Drum Internals & CFD Flights", subtitle: "Material Curtain & Moisture Removal", image: "/images/materials/product-lines-dryer-drum.png", tag: "Internal Flighting" },
-      { title: "Dryer Drives & Trunnions", subtitle: "Machined Rollers & Heavy Bearings", image: "/images/materials/dryer-combo.png", tag: "Drive Assemblies" },
+      { title: "Rotary Dryer Drum System", subtitle: "Controlled Process Drying & Heat Transfer", image: "/images/CAPABILITIES/Thermal1.png", tag: "Rotary Dryer" },
+      { title: "Thermic Fluid Heater Package", subtitle: "Circulation Skid & Heat Exchanger", image: "/images/CAPABILITIES/Thermal2.png", tag: "Thermic Fluid" },
+      { title: "Drum Internals & CFD Flights", subtitle: "Material Curtain & Moisture Removal", image: "/images/CAPABILITIES/Thermal3.png", tag: "Internal Flighting" },
+      { title: "High-Temp Combustion Ducting", subtitle: "Burner Systems & Heat Recovery", image: "/images/CAPABILITIES/Thermal4.png", tag: "Combustion Unit" },
     ],
     highlights: [
       { title: "Duty-based design", body: "Every system is selected around process lead-operating temperature and site reality." },
@@ -192,7 +194,7 @@ export const capabilities = [
     number: "05",
     icon: Boxes,
     motif: "conveyor",
-    image: "/images/material-handling.png",
+    image: "/images/CAPABILITIES/Material Handling 2.png",
     title: "Material Handling",
     accent: "& Storage",
     summary:
@@ -213,10 +215,10 @@ export const capabilities = [
       },
     ],
     slides: [
-      { title: "Heavy-Duty Belt Conveyor", subtitle: "Bulk Material Transfer & Storage", image: "/images/material-handling.png", tag: "Conveyor System" },
-      { title: "Bucket Elevator & Drag Conveyor", subtitle: "Vertical Transport & Elevating Towers", image: "/images/materials/elevator-combo.png", tag: "Elevator Towers" },
-      { title: "Drive Sprockets & Wheels", subtitle: "Segmented Teeth & Hardened Rims", image: "/images/materials/drive-sprockets.png", tag: "Drive Components" },
-      { title: "Elevator Buckets & Chutes", subtitle: "Reinforced Lips & Chain Mounts", image: "/images/materials/elevator-buckets.png", tag: "Elevator Elements" },
+      { title: "Heavy-Duty Belt Conveyor", subtitle: "Bulk Material Transfer & Storage", image: "/images/CAPABILITIES/Material Handling 2.png", tag: "Conveyor System" },
+      { title: "Bucket Elevator & Drag Conveyor", subtitle: "Vertical Transport & Elevating Towers", image: "/images/CAPABILITIES/Material hadnling 1.png", tag: "Elevator Towers" },
+      { title: "Surge Hoppers & Storage Silos", subtitle: "Live-Bottom Discharge Gates", image: "/images/CAPABILITIES/Material handling 3.png", tag: "Storage Silos" },
+      { title: "Elevator Buckets & Drive Sprockets", subtitle: "Segmented Teeth & Hardened Rims", image: "/images/CAPABILITIES/Material Handling 4.png", tag: "Drive Assemblies" },
     ],
     highlights: [
       { title: "Flow Reliability", body: "Geometry can be planned around angle of repose, moisture, fines, stickiness and abrasion." },
@@ -234,7 +236,7 @@ export const capabilities = [
     number: "06",
     icon: Cog,
     motif: "gears",
-    image: "/images/material-processing.png",
+    image: "/images/CAPABILITIES/Material Processing.png",
     title: "Material Processing",
     accent: "Systems",
     summary:
@@ -255,9 +257,10 @@ export const capabilities = [
       },
     ],
     slides: [
-      { title: "Pugmill & Twin-Shaft Mixer", subtitle: "Controlled Material Blending & Dosing", image: "/images/material-processing.png", tag: "Twin-Shaft Mixing" },
-      { title: "High-Chrome Mixer Arms", subtitle: "Ni-Hard Paddles & Arm Protection", image: "/images/materials/product-lines-pugmill-mixer.png", tag: "Mixer Castings" },
-      { title: "Split-Half Arm Guards", subtitle: "Shield Protection for Mixer Shafts", image: "/images/materials/mixer-paddle-arms.png", tag: "Shaft Protection" },
+      { title: "Pugmill & Twin-Shaft Mixer", subtitle: "Controlled Material Blending & Dosing", image: "/images/CAPABILITIES/Material Processing.png", tag: "Twin-Shaft Mixing" },
+      { title: "High-Chrome Mixer Arms", subtitle: "Ni-Hard Paddles & Arm Protection", image: "/images/CAPABILITIES/Material processing 1.png", tag: "Mixer Castings" },
+      { title: "Industrial Screening Unit", subtitle: "Multi-Deck Classification Screens", image: "/images/CAPABILITIES/material processing 2.png", tag: "Screening Unit" },
+      { title: "Batching & Dosing Hopper", subtitle: "Feeder Modules & Material Weighing", image: "/images/CAPABILITIES/Material Processing 3.png", tag: "Dosing Hopper" },
     ],
     highlights: [
       { title: "Consistent Output", body: "The system is structured to support repeatable material quality and process stability." },
@@ -275,7 +278,7 @@ export const capabilities = [
     number: "07",
     icon: Recycle,
     motif: "conveyor",
-    image: "/images/recycling-systems.png",
+    image: "/images/CAPABILITIES/recycling 1.png",
     title: "Recycling & Circular",
     accent: "Systems",
     summary:
@@ -296,9 +299,9 @@ export const capabilities = [
       },
     ],
     slides: [
-      { title: "RAP Screening & Recovery Line", subtitle: "Variable Feedstock Processing", image: "/images/recycling-systems.png", tag: "Recovery System" },
-      { title: "Custom Feed Bins & Hoppers", subtitle: "Controlled Dosing & Plant Integration", image: "/images/materials/product-lines-custom-wear.png", tag: "Feed Bins" },
-      { title: "Hardfaced Impact Plates", subtitle: "Chromium-Carbide Impact Protection", image: "/images/materials/hardfaced-plate.png", tag: "Impact Liners" },
+      { title: "RAP Screening & Recovery Line", subtitle: "Variable Feedstock Processing", image: "/images/CAPABILITIES/recycling 1.png", tag: "Recovery System" },
+      { title: "Custom Feed Bins & Hoppers", subtitle: "Controlled Dosing & Plant Integration", image: "/images/CAPABILITIES/recycling 2.png", tag: "Feed Bins" },
+      { title: "Reclaimed Material Processing", subtitle: "Impact Crushing & Sorting Modules", image: "/images/CAPABILITIES/Recycling 3.png", tag: "Circular Processing" },
     ],
     highlights: [
       { title: "Circular Value", body: "Systems are built to recover usable material while managing process risk." },
@@ -316,7 +319,7 @@ export const capabilities = [
     number: "08",
     icon: Cpu,
     motif: "control",
-    image: "/images/scada-hmi.png",
+    image: "/images/CAPABILITIES/Automation.png",
     title: "Automation &",
     accent: "Digital Controls",
     summary:
@@ -337,9 +340,9 @@ export const capabilities = [
       },
     ],
     slides: [
-      { title: "SCADA & HMI Dashboard", subtitle: "Operator Process Visibility & Alarms", image: "/images/scada-hmi.png", tag: "SCADA Interface" },
-      { title: "MCC & VFD Control Cabinets", subtitle: "Electrical Panels & Drive Enclosures", image: "/images/automation-mcc-panel-studio.png", tag: "MCC Cabinets" },
-      { title: "Automation Control Room", subtitle: "Plant Interlocks & Data Diagnostics", image: "/images/automation-room.png", tag: "Control Hub" },
+      { title: "SCADA & HMI Dashboard", subtitle: "Operator Process Visibility & Alarms", image: "/images/CAPABILITIES/Automation.png", tag: "SCADA Interface" },
+      { title: "MCC & VFD Control Cabinets", subtitle: "Electrical Panels & Drive Enclosures", image: "/images/CAPABILITIES/Automation1.png", tag: "MCC Cabinets" },
+      { title: "Automation Control Room", subtitle: "Plant Interlocks & Data Diagnostics", image: "/images/CAPABILITIES/Automation3.png", tag: "Control Hub" },
     ],
     highlights: [
       { title: "Operator clarity", body: "Interfaces can be structured around what operators need to see, control and alarm on-site." },
@@ -357,7 +360,7 @@ export const capabilities = [
     number: "09",
     icon: FlaskConical,
     motif: "desk",
-    image: "/images/engineering-rd.png",
+    image: "/images/CAPABILITIES/EngineeringR&D.png",
     title: "Engineering, R&D &",
     accent: "Product Development",
     summary:
@@ -378,9 +381,9 @@ export const capabilities = [
       },
     ],
     slides: [
-      { title: "3D CAD & Duty Definition", subtitle: "Concept Engineering & Feasibility", image: "/images/engineering-rd.png", tag: "3D Engineering" },
-      { title: "Ryetek Engineering Workshop", subtitle: "Prototype Testing & Assembly Support", image: "/images/ryetek_real_engineering_hq_1785489693920.png", tag: "Workshop & Testing" },
-      { title: "3D Laser Scanning & Reverse Eng", subtitle: "Pattern Making & Alloy Development", image: "/images/materials/product-lines-custom-wear.png", tag: "Reverse Eng" },
+      { title: "3D CAD & Duty Definition", subtitle: "Concept Engineering & Feasibility", image: "/images/CAPABILITIES/EngineeringR&D.png", tag: "3D Engineering" },
+      { title: "Ryetek Engineering Workshop", subtitle: "Prototype Testing & Assembly Support", image: "/images/CAPABILITIES/Engineering R&D 2.png", tag: "Workshop & Testing" },
+      { title: "Reverse Engineering & Scanning", subtitle: "Pattern Making & Alloy Development", image: "/images/materials/product-lines-custom-wear.png", tag: "Reverse Eng" },
     ],
     highlights: [
       { title: "Fewer Blind Spots", body: "Mechanical, thermal, control and maintenance requirements are considered together." },
@@ -398,7 +401,7 @@ export const capabilities = [
     number: "10",
     icon: Wrench,
     motif: "parts",
-    image: "/images/wearguard-parts.png",
+    image: "/images/CAPABILITIES/machine part1.png",
     title: "Machine Parts",
     accent: "& Castings Range",
     summary:
@@ -419,10 +422,10 @@ export const capabilities = [
       },
     ],
     slides: [
-      { title: "Machined Castings & Rollers", subtitle: "Trunnion Wheels & Bearing Assemblies", image: "/images/wearguard-parts.png", tag: "Machined Parts" },
-      { title: "Wear Steel & High-Chrome Liners", subtitle: "P400/P500 & Wearcast Alloys", image: "/images/materials/wear-steel.png", tag: "Wear Alloys" },
-      { title: "Ceramic Tile Liners", subtitle: "High-Purity Alumina Tile Protection", image: "/images/materials/ceramic-liners.png", tag: "Ceramic Liners" },
-      { title: "Mixer Arms & Protection Shields", subtitle: "Complete Change-Out Spares Kits", image: "/images/materials/arm-protection.png", tag: "Replacement Kits" },
+      { title: "Machined Castings & Rollers", subtitle: "Trunnion Wheels & Bearing Assemblies", image: "/images/CAPABILITIES/machine part1.png", tag: "Machined Parts" },
+      { title: "Wear Steel & High-Chrome Liners", subtitle: "P400/P500 & Wearcast Alloys", image: "/images/CAPABILITIES/machine part2.png", tag: "Wear Alloys" },
+      { title: "Ceramic Tile & Chute Liners", subtitle: "High-Purity Alumina Protection", image: "/images/CAPABILITIES/machine part3.png", tag: "Ceramic Liners" },
+      { title: "Mixer Arms & Protection Shields", subtitle: "Complete Change-Out Spares Kits", image: "/images/CAPABILITIES/machine part4.png", tag: "Replacement Kits" },
     ],
     highlights: [
       { title: "Longer Service Life", body: "Wear solutions selected to improve durability in high-ablation operating zones." },

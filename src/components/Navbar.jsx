@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
+import RyetekLogo from "./RyetekLogo";
 
 const LINKS = [
   { to: "/capabilities", label: "Capabilities" },
@@ -27,13 +28,8 @@ export default function Navbar() {
       }`}
     >
       <div className="container-xl flex h-16 items-center justify-between lg:h-20">
-        <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <span className="font-display text-2xl font-bold tracking-wide text-white">
-            RYE<span className="text-teal-400">TEK</span>
-          </span>
-          <span className="hidden border-l border-white/20 pl-2 text-[10px] font-medium uppercase tracking-[0.2em] text-white/60 sm:block">
-            Industrial Systems
-          </span>
+        <Link to="/" onClick={() => setOpen(false)}>
+          <RyetekLogo />
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">

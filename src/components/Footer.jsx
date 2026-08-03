@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Globe, Mail, Phone, MapPin, ChevronDown } from "lucide-react";
+import RyetekLogo from "./RyetekLogo";
 
 export default function Footer() {
   const [openSection, setOpenSection] = useState(null);
@@ -15,9 +16,9 @@ export default function Footer() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand Col */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <span className="font-display text-2xl font-bold tracking-wide text-white">
-              RYE<span className="text-teal-400">TEK</span>
-            </span>
+            <Link to="/">
+              <RyetekLogo showSubtitle={false} />
+            </Link>
             <p className="mt-3 max-w-xs text-xs leading-relaxed text-white/70">
               Industrial systems for Australian projects, specializing in concrete & asphalt equipment,
               thermal systems, bulk materials handling, controls & automation.

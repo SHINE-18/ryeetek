@@ -7,11 +7,15 @@ import SEO from "../components/SEO";
 import { capabilities } from "../data/capabilities";
 
 const HERO_SLIDES = [
-  { image: "/images/asphalt-plant.png", motif: "silos" },
-  { image: "/images/bitumen-tanks.png", motif: "tanks" },
-  { image: "/images/rotary-dryer.png", motif: "drum" },
-  { image: "/images/material-handling.png", motif: "conveyor" },
-  { image: "/images/scada-hmi.png", motif: "control" },
+  { image: "/images/HEROSECTION/asphalt5.png", motif: "silos" },
+  { image: "/images/HEROSECTION/bitumen5.png", motif: "tanks" },
+  { image: "/images/HEROSECTION/process-systems.png", motif: "tanks" },
+  { image: "/images/HEROSECTION/material-handling.png", motif: "conveyor" },
+  { image: "/images/HEROSECTION/recycling-systems.png", motif: "conveyor" },
+  { image: "/images/HEROSECTION/automation5.png", motif: "control" },
+  { image: "/images/HEROSECTION/engineering-rd.png", motif: "desk" },
+  { image: "/images/HEROSECTION/EnginerringR&D.png", motif: "desk" },
+  { image: "/images/HEROSECTION/ryetek_real_engineering_hq_1785489693920.png", motif: "desk" },
 ];
 
 function CapabilityCardSlideshow({ capId, capTitle, defaultMotif, slides, defaultImage }) {
@@ -26,7 +30,7 @@ function CapabilityCardSlideshow({ capId, capTitle, defaultMotif, slides, defaul
     if (isPaused || activeSlides.length <= 1) return;
     const timer = setInterval(() => {
       setSlideIdx((prev) => (prev + 1) % activeSlides.length);
-    }, 3500);
+    }, 5000);
     return () => clearInterval(timer);
   }, [isPaused, activeSlides.length]);
 
@@ -42,11 +46,11 @@ function CapabilityCardSlideshow({ capId, capTitle, defaultMotif, slides, defaul
         <AnimatePresence mode="wait">
           <motion.div
             key={slideIdx}
-            initial={{ opacity: 0, scale: 1.02 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="absolute inset-0 h-full w-full"
+            transition={{ duration: 1.0, ease: "easeInOut" }}
+            className="absolute inset-0 h-full w-full transition-transform duration-700 ease-out group-hover/slide:scale-105"
           >
             <PhotoPlaceholder
               motif={defaultMotif}
@@ -60,26 +64,7 @@ function CapabilityCardSlideshow({ capId, capTitle, defaultMotif, slides, defaul
         </AnimatePresence>
 
         {/* Gradient Overlay for Readable Text */}
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/20 to-transparent pointer-events-none z-[5]" />
-
-        {/* Category / Feature Tag Badge */}
-        {current.tag && (
-          <div className="absolute top-3.5 left-3.5 z-10">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-teal-400/40 bg-navy-950/85 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-teal-300 backdrop-blur-md shadow-md">
-              <span className="h-1.5 w-1.5 rounded-full bg-teal-400 animate-pulse" />
-              {current.tag}
-            </span>
-          </div>
-        )}
-
-        {/* Slide Counter Indicator */}
-        {activeSlides.length > 1 && (
-          <div className="absolute top-3.5 right-3.5 z-10">
-            <span className="rounded-full border border-white/20 bg-navy-950/85 px-2.5 py-1 text-[10px] font-mono font-bold text-white/80 backdrop-blur-md">
-              {slideIdx + 1} / {activeSlides.length}
-            </span>
-          </div>
-        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/45 to-transparent pointer-events-none z-[5]" />
 
         {/* Slide Title & Subtitle Caption */}
         <div className="absolute bottom-3.5 left-3.5 right-3.5 z-10">
@@ -93,42 +78,8 @@ function CapabilityCardSlideshow({ capId, capTitle, defaultMotif, slides, defaul
           )}
         </div>
 
-        {/* Navigation Arrows */}
-        {activeSlides.length > 1 && (
-          <>
-            <button
-              onClick={() => setSlideIdx((prev) => (prev === 0 ? activeSlides.length - 1 : prev - 1))}
-              className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-navy-950/80 text-white opacity-0 transition-all hover:bg-teal-500 hover:text-navy-950 group-hover/slide:opacity-100"
-              aria-label="Previous slide"
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <button
-              onClick={() => setSlideIdx((prev) => (prev + 1) % activeSlides.length)}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-navy-950/80 text-white opacity-0 transition-all hover:bg-teal-500 hover:text-navy-950 group-hover/slide:opacity-100"
-              aria-label="Next slide"
-            >
-              <ChevronRight size={18} />
-            </button>
-          </>
-        )}
       </div>
 
-      {/* Dot Indicators Strip */}
-      {activeSlides.length > 1 && (
-        <div className="flex items-center justify-center gap-1.5 bg-navy-950 py-2 border-t border-white/10">
-          {activeSlides.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setSlideIdx(i)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                i === slideIdx ? "w-6 bg-teal-400" : "w-1.5 bg-white/30 hover:bg-white/60"
-              }`}
-              aria-label={`Go to slide ${i + 1}`}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 }
@@ -137,13 +88,15 @@ export default function Capabilities() {
   const { hash } = useLocation();
   const [selectedCap, setSelectedCap] = useState("");
   const [heroSlide, setHeroSlide] = useState(0);
+  const [isHeroPaused, setIsHeroPaused] = useState(false);
 
   useEffect(() => {
+    if (isHeroPaused) return;
     const timer = setInterval(() => {
       setHeroSlide((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 4500);
+    }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isHeroPaused]);
 
   useEffect(() => {
     if (hash) {
@@ -181,7 +134,11 @@ export default function Capabilities() {
         path="/capabilities"
       />
       <section className="relative overflow-hidden bg-navy-950 pt-32 pb-16 lg:pt-40 lg:pb-20">
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[36%] lg:block overflow-hidden">
+        <div 
+          className="absolute inset-y-0 right-0 hidden w-[68%] lg:block overflow-hidden cursor-pointer"
+          onMouseEnter={() => setIsHeroPaused(true)}
+          onMouseLeave={() => setIsHeroPaused(false)}
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={heroSlide}
@@ -189,7 +146,7 @@ export default function Capabilities() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1.2, ease: "easeInOut" }}
-              className="absolute inset-0 h-full w-full"
+              className="absolute inset-0 h-full w-full transition-transform duration-700 ease-out hover:scale-105"
             >
               <PhotoPlaceholder
                 motif={HERO_SLIDES[heroSlide].motif}
@@ -198,9 +155,9 @@ export default function Capabilities() {
               />
             </motion.div>
           </AnimatePresence>
-          <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/80 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/85 via-45% to-transparent z-10" />
         </div>
-        <div className="container-xl relative">
+        <div className="container-xl relative z-20">
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-teal-400">
             Capabilities
           </p>

@@ -36,12 +36,12 @@ export default function Engineering() {
         path="/engineering"
       />
       <section className="relative overflow-hidden bg-navy-950 pt-32 pb-20 lg:pt-40 lg:pb-24">
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[42%] lg:block">
-          <PhotoPlaceholder motif="desk" image="/images/engineering-rd.png" className="h-full w-full" label="Engineering team" />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/50 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[65%] lg:block">
+          <PhotoPlaceholder motif="desk" image="/images/HEROSECTION/engineering-rd.png" className="h-full w-full object-cover" label="Engineering team" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/85 via-45% to-transparent z-10" />
         </div>
-        <div className="container-xl relative">
-          <div className="max-w-2xl">
+        <div className="container-xl relative z-20">
+          <div className="max-w-xl">
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-teal-400">
               09 / Capabilities
             </p>
