@@ -99,7 +99,68 @@ export default function Engineering() {
             })}
           </div>
         </div>
-      </section>      {/* Distinct Light Process & CTA Section */}
+      </section>
+
+      {/* EQUIPMENT SHOWCASE: Custom Plant Engineering & Modular Design */}
+      <section className="section-pad bg-navy-950 text-white relative overflow-hidden border-t border-white/10">
+        <div className="container-xl grid gap-12 lg:grid-cols-2 lg:items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="mb-3 inline-block rounded-full border border-teal-500/30 bg-teal-500/10 px-3.5 py-1 text-xs font-bold uppercase tracking-widest text-teal-400">
+              Custom Equipment Engineering
+            </span>
+            <h2 className="font-display text-3xl font-bold uppercase leading-tight text-white sm:text-4xl lg:text-5xl">
+              Modular Plant Design & <span className="text-teal-400">Custom Feeders</span>
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-white/70">
+              From multi-compartment aggregate cold feed bin systems to custom bin discharge gates, Ryetek engineers equipment packages designed specifically around material characteristics, throughput rates, and site geometry.
+            </p>
+
+            <div className="mt-6 grid grid-cols-2 gap-4">
+              <div className="border border-white/10 bg-white/5 p-4 rounded-sm">
+                <span className="block text-2xl font-bold text-teal-400 font-display">100%</span>
+                <span className="text-xs text-white/70 uppercase tracking-wider font-semibold">Custom Configured</span>
+              </div>
+              <div className="border border-white/10 bg-white/5 p-4 rounded-sm">
+                <span className="block text-2xl font-bold text-teal-400 font-display">Heavy-Duty</span>
+                <span className="text-xs text-white/70 uppercase tracking-wider font-semibold">Australian Standard</span>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="relative overflow-hidden rounded-lg border border-white/15 shadow-2xl group aspect-[4/3]"
+          >
+            <img
+              src="/images/Ryetek cold feed bins.png"
+              alt="Ryetek Custom Multi-Compartment Cold Feed Bins"
+              className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-4 left-4 right-4 z-10">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-teal-400 bg-navy-950/80 px-2 py-0.5 rounded border border-teal-400/30">
+                Equipment Showcase
+              </span>
+              <h4 className="font-display text-lg font-bold uppercase mt-1 text-white">
+                Multi-Compartment Cold Feed Bins
+              </h4>
+              <p className="text-xs text-white/75 font-mono">
+                Aggregate Feeder Bins & Variable Speed Belt Feeders
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Distinct Light Process & CTA Section */}
       <section className="section-pad relative overflow-hidden bg-gradient-to-b from-paper-50 to-paper-100 border-t border-b border-line-200">
         <div className="container-xl relative">
           <SectionHeading

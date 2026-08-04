@@ -25,9 +25,28 @@ export default function Home() {
       />
       {/* HERO */}
       <section className="relative overflow-hidden bg-navy-950 pt-28 pb-16 lg:pt-40 lg:pb-24">
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[65%] lg:block">
-          <PhotoPlaceholder motif="silos" image="/images/MAIN SECTION.png" className="h-full w-full object-cover" label="Plant photography" />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/85 via-45% to-transparent z-10" />
+        {/* Blended Background Hero Image */}
+        <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+          <motion.div
+            initial={{ opacity: 0, scale: 1.04 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            className="absolute inset-y-0 right-0 w-full lg:w-[70%] xl:w-[65%]"
+          >
+            <img
+              src="/images/Ryetek Concrete plants.png"
+              alt="Ryetek Concrete Batching Plant & Silos"
+              className="h-full w-full object-cover object-center lg:object-right-center opacity-90 lg:opacity-100 brightness-[1.18] contrast-[1.05] transition-opacity duration-700"
+            />
+
+            {/* Gradient Mask Overlays for Seamless Dark Navy Blending */}
+            <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/65 via-50% to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/25 via-25% to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-b from-navy-950/50 via-transparent to-transparent z-10" />
+
+            {/* Subtle Ambient Teal Backlight Accent */}
+            <div className="absolute top-1/3 right-1/4 h-96 w-96 rounded-full bg-teal-500/10 blur-3xl pointer-events-none" />
+          </motion.div>
         </div>
 
         <div className="container-xl relative z-20">

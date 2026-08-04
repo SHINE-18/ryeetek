@@ -146,6 +146,13 @@ const DRYER_SLIDES = [
 // ── FILTER COMPONENTS SLIDESHOW DATA ─────────────────────────────────────────
 const FILTER_SLIDES = [
   {
+    id: "baghouse-tower",
+    title: "Green Industrial Baghouse Filtration Tower",
+    subtitle: "Complete Baghouse Filtration System & Pulse-Jet Extraction",
+    image: "/images/Ryetek bag house filter.png",
+    tag: "Baghouse Tower",
+  },
+  {
     id: "filter-combo",
     title: "Filter Component Suite",
     subtitle: "Complete Baghouse Filtration System",

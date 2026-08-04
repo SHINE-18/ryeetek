@@ -23,12 +23,18 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full transition-colors duration-300 ${
-        scrolled ? "bg-navy-950/95 backdrop-blur shadow-lg shadow-black/20" : "bg-transparent"
+      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+        scrolled
+          ? "bg-navy-950/95 backdrop-blur-md shadow-xl shadow-black/30 border-b border-white/10"
+          : "bg-transparent"
       }`}
     >
-      <div className="container-xl flex h-16 items-center justify-between lg:h-20">
-        <Link to="/" onClick={() => setOpen(false)}>
+      <div
+        className={`container-xl flex items-center justify-between transition-all duration-300 ${
+          scrolled ? "h-14 lg:h-16" : "h-16 lg:h-20"
+        }`}
+      >
+        <Link to="/" onClick={() => setOpen(false)} className="flex items-center">
           <RyetekLogo />
         </Link>
 
@@ -38,7 +44,7 @@ export default function Navbar() {
               key={link.to}
               to={link.to}
               className={({ isActive }) =>
-                `text-sm font-medium uppercase tracking-wide transition-colors ${
+                `text-xs font-semibold uppercase tracking-wider transition-colors ${
                   isActive ? "text-teal-400" : "text-white/85 hover:text-teal-300"
                 }`
               }
@@ -48,9 +54,9 @@ export default function Navbar() {
           ))}
           <a
             href="tel:+61437433890"
-            className="flex items-center gap-2 rounded-sm bg-teal-500 px-4 py-2 text-sm font-semibold text-navy-950 transition-colors hover:bg-teal-400"
+            className="flex items-center gap-2 rounded-sm bg-teal-500 px-4 py-2 text-xs font-bold text-navy-950 transition-all duration-300 hover:bg-teal-400"
           >
-            <Phone size={15} /> +61 437 433 890
+            <Phone size={14} /> +61 437 433 890
           </a>
         </nav>
 

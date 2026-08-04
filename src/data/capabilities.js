@@ -17,7 +17,7 @@ export const capabilities = [
     number: "01",
     icon: Factory,
     motif: "silos",
-    image: "/images/CAPABILITIES/Ashphalt.png",
+    image: "/images/Ryetek Concrete.png",
     title: "Concrete & Asphalt",
     accent: "Plant Solutions",
     summary:
@@ -49,8 +49,8 @@ export const capabilities = [
       },
     ],
     slides: [
-      { title: "Asphalt & Batching Plant", subtitle: "High-Capacity Production Tower & Reflection", image: "/images/CAPABILITIES/Ashphalt.png", tag: "Asphalt Plant" },
-      { title: "Concrete Batching Plant", subtitle: "Aggregate Silos & Transit Mixer Truck", image: "/images/CAPABILITIES/Ashphalt1.png", tag: "Concrete Plant" },
+      { title: "Concrete Batching Plant & Silos", subtitle: "High-Capacity Storage Silos & Transit Batching Tower", image: "/images/Ryetek Concrete.png", tag: "Concrete Plant" },
+      { title: "Asphalt Production Plant", subtitle: "Illuminated Asphalt Drum, Tower & Bitumen Storage", image: "/images/Ryetek Asphalt plant.png", tag: "Asphalt Plant" },
       { title: "Elevating Plant Systems", subtitle: "Integrated Elevator & Material Flow", image: "/images/materials/elevator-plant.png", tag: "Plant System" },
     ],
     highlights: [
@@ -173,10 +173,10 @@ export const capabilities = [
       },
     ],
     slides: [
+      { title: "Baghouse Filter & Dust Extraction", subtitle: "Green Industrial Filtration Tower & Pulse-Jet System", image: "/images/Ryetek bag house filter.png", tag: "Dust Extraction" },
       { title: "Rotary Dryer Drum System", subtitle: "Controlled Process Drying & Heat Transfer", image: "/images/CAPABILITIES/Thermal1.png", tag: "Rotary Dryer" },
       { title: "Thermic Fluid Heater Package", subtitle: "Circulation Skid & Heat Exchanger", image: "/images/CAPABILITIES/Thermal2.png", tag: "Thermic Fluid" },
       { title: "Drum Internals & CFD Flights", subtitle: "Material Curtain & Moisture Removal", image: "/images/CAPABILITIES/Thermal3.png", tag: "Internal Flighting" },
-      { title: "High-Temp Combustion Ducting", subtitle: "Burner Systems & Heat Recovery", image: "/images/CAPABILITIES/Thermal4.png", tag: "Combustion Unit" },
     ],
     highlights: [
       { title: "Duty-based design", body: "Every system is selected around process lead-operating temperature and site reality." },
@@ -194,7 +194,7 @@ export const capabilities = [
     number: "05",
     icon: Boxes,
     motif: "conveyor",
-    image: "/images/CAPABILITIES/Material Handling 2.png",
+    image: "/images/Ryetek cold feed bins.png",
     title: "Material Handling",
     accent: "& Storage",
     summary:
@@ -215,10 +215,10 @@ export const capabilities = [
       },
     ],
     slides: [
+      { title: "Multi-Compartment Cold Feed Bins", subtitle: "Aggregate Feeder Bins & Variable Speed Belt Feeders", image: "/images/Ryetek cold feed bins.png", tag: "Feeder Bins" },
       { title: "Heavy-Duty Belt Conveyor", subtitle: "Bulk Material Transfer & Storage", image: "/images/CAPABILITIES/Material Handling 2.png", tag: "Conveyor System" },
       { title: "Bucket Elevator & Drag Conveyor", subtitle: "Vertical Transport & Elevating Towers", image: "/images/CAPABILITIES/Material hadnling 1.png", tag: "Elevator Towers" },
       { title: "Surge Hoppers & Storage Silos", subtitle: "Live-Bottom Discharge Gates", image: "/images/CAPABILITIES/Material handling 3.png", tag: "Storage Silos" },
-      { title: "Elevator Buckets & Drive Sprockets", subtitle: "Segmented Teeth & Hardened Rims", image: "/images/CAPABILITIES/Material Handling 4.png", tag: "Drive Assemblies" },
     ],
     highlights: [
       { title: "Flow Reliability", body: "Geometry can be planned around angle of repose, moisture, fines, stickiness and abrasion." },
