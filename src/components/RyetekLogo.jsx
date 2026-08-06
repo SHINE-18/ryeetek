@@ -5,7 +5,7 @@ export default function RyetekLogo({ showSubtitle = true, className = "" }) {
       <img
         src="/images/logo.svg"
         alt="RYETEK Industrial Systems"
-        className="w-[135px] h-10 sm:w-[145px] sm:h-11 object-contain shrink-0 -mr-3.5 sm:-mr-4.5"
+        className="w-[135px] h-10 sm:w-[145px] sm:h-11 object-contain shrink-0 -ml-3 sm:-ml-3.5 -mr-3.5 sm:-mr-4.5"
       />
       {showSubtitle && (
         <div className="hidden items-center gap-2 sm:flex shrink-0">

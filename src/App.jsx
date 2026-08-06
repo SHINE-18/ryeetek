@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import ScrollProgress from "./components/ScrollProgress";
 import Home from "./pages/Home";
 import Capabilities from "./pages/Capabilities";
 import WearGuard from "./pages/WearGuard";
@@ -22,7 +21,6 @@ export default function App() {
     <BrowserRouter>
       <ScrollToTop />
       <Navbar />
-      <ScrollProgress />
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
