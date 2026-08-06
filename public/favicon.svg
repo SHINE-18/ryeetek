@@ -1,5 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <rect width="32" height="32" rx="6" fill="#061021"/>
-  <path d="M 5 9 L 21 9 L 27 16 L 21 23 L 5 23 Z" fill="#16a3c4"/>
-  <text x="8" y="19.5" font-family="sans-serif" font-weight="900" font-size="9" fill="#061021">RYE</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="10" fill="#061021"/>
+  <!-- Cyan RYETEK chevron banner shape -->
+  <polygon points="6,16 46,16 58,32 46,48 6,48" fill="#16a3c4"/>
+  <!-- RYETEK text -->
+  <text x="9" y="38" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="20" fill="#061021" letter-spacing="0.5">RYE</text>
+  <text x="36" y="38" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="20" fill="#ffffff" letter-spacing="0.5">TEK</text>
 </svg>
