@@ -249,32 +249,32 @@ const MIXER_SLIDES = [
 // ── FLOW & WEAR LINERS SLIDESHOW DATA ─────────────────────────────────────────
 const FLOW_SLIDES = [
   {
-    id: "wear-steel-liners",
-    title: "Wear Steel Chute Liners",
-    subtitle: "Quenched & Tempered P400/P500 Liners",
-    image: "/images/materials/wear-steel.png",
-    tag: "Chute Protection",
+    id: "chute-impact-assembly",
+    title: "Heavy-Duty Chute & Hopper Impact Assemblies",
+    subtitle: "Custom Engineered Rock-Box & Drop-Zone Liners",
+    image: "/images/materials/product-lines-custom-wear.png",
+    tag: "Chute & Hopper Protection",
   },
   {
-    id: "hardfaced-impact",
-    title: "Hardfaced Impact Plates",
-    subtitle: "58–65 HRC Chromium-Carbide Matrix",
-    image: "/images/materials/hardfaced-plate.png",
-    tag: "High Velocity Impact",
+    id: "pugmill-flow-liners",
+    title: "Pugmill & Mixer Discharge Chutes",
+    subtitle: "High-Abrasion Transfer Point Skirt Liners",
+    image: "/images/materials/product-lines-pugmill-mixer.png",
+    tag: "Transfer Zone Protection",
   },
   {
-    id: "ceramic-liners",
-    title: "Alumina Ceramic Wear Liners",
-    subtitle: "92% & 95% High-Purity Ceramic Tiles",
-    image: "/images/materials/ceramic-liners.png",
-    tag: "Sliding Abrasion",
+    id: "elevator-transfer-chutes",
+    title: "Elevating Tower Drop Chutes",
+    subtitle: "High-Velocity Vertical Drop Liners & Deflectors",
+    image: "/images/materials/elevator-plant.png",
+    tag: "Vertical Transport Flow",
   },
   {
-    id: "sacrificial-bars",
-    title: "Sacrificial Inserts & Wear Bars",
-    subtitle: "Replaceable Bolt-In & Weld-On Runner Bars",
-    image: "/images/materials/sacrificial-inserts.png",
-    tag: "Quick Replacement",
+    id: "cfd-flight-liners",
+    title: "CFD Drum Flight & Flow Liners",
+    subtitle: "Curtain Flighting & Sacrificial Flow Strips",
+    image: "/images/materials/drum-flights.png",
+    tag: "Material Cascade Flow",
   },
 ];
 
@@ -669,20 +669,7 @@ export default function WearGuard() {
           </div>
 
           {/* Running Marquee Pills for Dryer Components */}
-          {/* <MarqueePills
-            items={[
-              "Trunnion Wheels & Rollers",
-              "CFD Lifter Flights",
-              "Girth Gears & Pinions",
-              "Thrust Roller Assemblies",
-              "Discharge Flights",
-              "Seal Rings & Bearings",
-            ]}
-            icon={RotateCw}
-            bgClass="bg-paper-50"
-            sectionBg="from-white"
-            speed={35}
-          /> */}
+          
         </div>
       </section>
 
@@ -783,21 +770,7 @@ export default function WearGuard() {
             </motion.div>
           </div>
 
-          {/* Running Marquee Pills for Filter Components */}
-          {/* <MarqueePills
-            items={[
-              "Nomex® Filter Bags",
-              "Stainless Steel Cages",
-              "Exhaust Fan Impellers",
-              "Meta-Aramid Bags",
-              "Blower Scroll Housings",
-              "Plenum Plates & Snap Rings",
-            ]}
-            icon={Filter}
-            bgClass="bg-white"
-            sectionBg="from-paper-100"
-            speed={35}
-          /> */}
+         
         </div>
       </section>
 
@@ -925,22 +898,7 @@ export default function WearGuard() {
             ))}
           </div>
 
-          {/* Running Marquee Pills for Mixer Components */}
-          {/* <MarqueePills
-            items={[
-              "Mixer Paddle Arms",
-              "Arm Protection Covers",
-              "Ni-Hard Liner Plates",
-              "High-Chrome Tips",
-              "Mixer Shaft Sleeves",
-              "Discharge Door Liners",
-            ]}
-            icon={Cog}
-            bgClass="bg-paper-50"
-            sectionBg="from-white"
-            speed={35}
-          /> */}
-
+        
           {/* Core Product lines grid */}
           <div className="mt-14 pt-10 border-t border-line-200">
             <h3 className="mb-6 font-display text-xl font-bold uppercase text-navy-950">
